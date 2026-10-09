@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Crissiel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif; }
+
+        :root {
+            --primary: #8b5cf6;
+            --primary-light: #a78bfa;
+            --accent: #8b5cf6;
+            --accent-hover: #7c3aed;
+            --bg-light: #121212;
+            --card-bg: #1e1e1e;
+            --text-dark: #f3f4f6;
+            --text-muted: #9ca3af;
+            --shadow-sm: 0 4px 12px rgba(0,0,0,0.3);
+            --shadow-md: 0 8px 24px rgba(0,0,0,0.5);
+            --radius: 18px;
+            --header-height: 72px;
+            --transition: 0.2s ease;
+        }
+
+        html { scroll-behavior: smooth; }
+        section, h2 { scroll-margin-top: 90px; }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            padding-top: var(--header-height);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        a { text-decoration: none; color: inherit; }
+
+        /* HEADER */
+        .header {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: var(--header-height);
+            background: var(--card-bg);
+            box-shadow: var(--shadow-sm);
+            z-index: 1000;
+            display: flex; align-items: center;
+            padding: 0 24px;
+        }
+        .header__container {
+            width: 100%; max-width: 1280px;
+            margin: 0 auto;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo {
+            display: flex; align-items: center; gap: 10px;
+            font-family: 'UnifrakturMaguntia', cursive;
+            font-size: 2.5rem; color: var(--text-dark);
+            letter-spacing: 1px;
+        }
+        .logo-animated-img {
+            height: 60px; width: auto; object-fit: contain;
+            animation: logoFloat 3s ease-in-out infinite;
+        }
+        .logo:hover .logo-animated-img { animation: logoBounce 0.5s ease; }
+        @keyframes logoFloat { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-4px);} }
+        @keyframes logoBounce { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-8px) scale(1.1);} }
+
+        /* NAV */
+        .nav { display: flex; align-items: center; gap: 28px; }
+        .nav__links { display: flex; gap: 26px; font-weight: 500; color: var(--text-muted); }
+        .nav__links a { transition: color var(--transition); font-size: 1rem; position: relative; }
+        .nav__links a:hover { color: var(--primary); }
+        .nav__links a::after {
+            content: ''; position: absolute; bottom: -4px; left: 0;
+            width: 0; height: 2px; background: var(--accent);
+            transition: width var(--transition);
+        }
+        .nav__links a:hover::after { width: 100%; }
+        .cart-icon {
+            position: relative; font-size: 1.5rem; color: var(--primary);
+            cursor: pointer; transition: transform var(--transition);
+            background: #2a2a2a; width: 48px; height: 48px;
+            display: flex; align-items: center; justify-content: center; border-radius: 50%;
+        }
+        .cart-icon:hover { transform: scale(1.05); }
+        .cart-count {
+            position: absolute; top: -5px; right: -5px;
+            background: var(--accent); color: white;
+            font-size: 0.75rem; font-weight: 700;
+            width: 22px; height: 22px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            border: 2px solid #1e1e1e;
+        }
+
+        /* MAIN */
+        .main {
+            flex: 1; max-width: 1280px; margin: 0 auto;
+            padding: 32px 24px 64px; width: 100%;
+        }
+        .hero {
+            background: linear-gradient(120deg, #1a1a2e, #1e1e1e);
+            border-radius: var(--radius);
+            padding: 40px 36px; margin-bottom: 48px;
+            box-shadow: var(--shadow-sm);
+            display: flex; flex-wrap: wrap;
+            justify-content: space-between; align-items: center;
+            gap: 20px; border: 1px solid #2a2a2a;
+        }
+        .hero h1 {
+            font-size: 2rem; font-weight: 800; color: var(--text-dark);
+            line-height: 1.2; max-width: 500px;
+            text-transform: uppercase; letter-spacing: 2px;
+        }
+        .hero p {
+            color: var(--text-muted); margin-top: 8px; font-size: 1rem;
+            max-width: 500px; font-style: italic;
+            text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600;
+        }
+        .hero .badge {
+            background: var(--accent); color: white;
+            padding: 12px 28px; border-radius: 40px;
+            font-weight: 600; font-size: 1rem;
+            box-shadow: 0 8px 18px rgba(139,92,246,0.3);
+            margin-top: 16px; display: inline-block;
+        }
+        .hero img { max-width: 320px; width: 100%; border-radius: 12px; object-fit: cover; }
+
+        .section-title {
+            font-size: 1.8rem; font-weight: 700; color: var(--text-dark);
+            margin-bottom: 28px; display: flex; align-items: center; gap: 12px;
+        }
+        .section-title i { color: var(--accent); }
+
+        /* FILTROS */
+        .category-filters {
+            display: flex; justify-content: center; align-items: center;
+            gap: 12px; margin: 25px 0 35px 0; flex-wrap: wrap;
+        }
+        .filter-btn {
+            background-color: #1a1a1a; color: #a78bfa;
+            border: 1px solid #333333;
+            padding: 10px 20px; border-radius: 25px;
+            font-size: 0.9rem; font-weight: 600;
+            cursor: pointer; transition: all 0.3s ease; outline: none;
+        }
+        .filter-btn:hover, .filter-btn.active {
+            background-color: #8b5cf6; color: #ffffff;
+            border-color: #8b5cf6;
+            box-shadow: 0 0 15px rgba(139,92,246,0.4);
+            transform: translateY(-2px);
+        }
+
+        /* GRID */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 25px; padding: 10px 20px 40px 20px;
+        }
+        .product-card {
+            background: #1a1a1a; border: 1px solid #222222;
+            border-radius: 16px; overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            display: flex; flex-direction: column;
+        }
+        .product-card:hover {
+            transform: translateY(-6px);
+            border-color: #8b5cf6;
+            box-shadow: 0 8px 25px rgba(139,92,246,0.25);
+        }
+        .product-image-container {
+            width: 100%; height: 260px; background: #000;
+            overflow: hidden; display: flex; align-items: center; justify-content: center;
+            cursor: zoom-in; /* ✅ NUEVO: cursor indicando que se puede ampliar */
+        }
+        .product-img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        .product-card:hover .product-img { transform: scale(1.05); }
+        .product-info {
+            padding: 16px; display: flex; flex-direction: column;
+            gap: 6px; flex: 1;
+        }
+        .product-category {
+            font-size: 0.75rem; color: #8b5cf6;
+            text-transform: uppercase; font-weight: 700; letter-spacing: 1px;
+        }
+        .product-title {
+            font-size: 1rem; color: #ffffff; margin: 0; font-weight: 600;
+        }
+        .product-desc {
+            font-size: 0.8rem; color: #9ca3af; margin: 0;
+        }
+        .product-price {
+            font-size: 1.15rem; font-weight: 700;
+            color: #a78bfa; margin-top: 4px;
+        }
+        .add-to-cart-btn {
+            background: #8b5cf6; color: #ffffff; border: none;
+            padding: 10px; border-radius: 8px;
+            font-weight: 600; cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 8px; width: 100%;
+        }
+        .add-to-cart-btn:hover { background: #7c3aed; }
+
+        /* CARRITO */
+        .cart-panel {
+            position: fixed; top: 0; right: -400px;
+            width: 100%; max-width: 380px; height: 100vh;
+            background: var(--card-bg);
+            box-shadow: -8px 0 30px rgba(0,0,0,0.5);
+            z-index: 1100;
+            transition: right 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+            display: flex; flex-direction: column;
+            padding: 24px 20px; border-radius: 24px 0 0 24px;
+        }
+        .cart-panel.open { right: 0; }
+        .cart-panel__header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 20px; padding-bottom: 16px;
+            border-bottom: 2px solid #2a2a2a;
+        }
+        .cart-panel__header h2 { font-size: 1.5rem; color: var(--primary); }
+        .close-cart {
+            background: none; border: none; font-size: 2rem;
+            line-height: 1; color: var(--text-muted);
+            cursor: pointer; padding: 0 8px;
+        }
+        .cart-items {
+            flex: 1; overflow-y: auto;
+            display: flex; flex-direction: column;
+            gap: 16px; padding-right: 6px;
+        }
+        .cart-item {
+            display: flex; gap: 12px; align-items: center;
+            background: #2a2a2a; padding: 12px 14px; border-radius: 16px;
+        }
+        .cart-item__img {
+            width: 48px; height: 48px; border-radius: 12px;
+            object-fit: cover; flex-shrink: 0;
+        }
+        .cart-item__details { flex: 1; min-width: 0; }
+        .cart-item__title {
+            font-weight: 600; font-size: 0.85rem; color: #fff;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .cart-item__price { color: var(--primary); font-weight: 700; font-size: 0.85rem; }
+        .cart-item__actions { display: flex; align-items: center; gap: 6px; }
+        .cart-item__actions button {
+            background: #1e1e1e; border: 1px solid #444;
+            color: #fff; width: 28px; height: 28px;
+            border-radius: 8px; font-weight: 700;
+            cursor: pointer; transition: all 0.1s;
+        }
+        .cart-item__actions button:hover {
+            background: var(--primary); color: white; border-color: var(--primary);
+        }
+        .cart-item__qty { font-weight: 600; min-width: 20px; text-align: center; color: #fff; }
+        .cart-footer {
+            margin-top: 20px; padding-top: 20px;
+            border-top: 2px solid #2a2a2a;
+        }
+        .cart-total {
+            display: flex; justify-content: space-between;
+            font-size: 1.3rem; font-weight: 800;
+            margin-bottom: 18px; color: var(--text-dark);
+        }
+        .btn-checkout {
+            width: 100%; background: var(--primary); color: white;
+            border: none; padding: 16px; border-radius: 40px;
+            font-weight: 700; font-size: 1.1rem; cursor: pointer;
+            transition: background 0.2s;
+            box-shadow: 0 8px 18px rgba(139,92,246,0.25);
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+        }
+        .btn-checkout:hover { background: var(--primary-light); }
+        .empty-cart-message {
+            text-align: center; color: var(--text-muted);
+            padding: 40px 0; font-size: 1rem;
+        }
+        .overlay {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(2px);
+            z-index: 1050; opacity: 0;
+            pointer-events: none; transition: opacity 0.3s;
+        }
+        .overlay.active { opacity: 1; pointer-events: all; }
+
+        /* SECCIÓN CONTACTO / REDES */
+        .contact-section {
+            background: linear-gradient(135deg, #1a1a2e, #1e1e1e);
+            border-radius: var(--radius);
+            padding: 48px 36px;
+            margin-top: 40px;
+            border: 1px solid #2a2a2a;
+            box-shadow: var(--shadow-sm);
+            text-align: center;
+        }
+        .contact-section h2 {
+            font-size: 2rem; color: var(--primary);
+            margin-bottom: 12px; font-weight: 800;
+            text-transform: uppercase; letter-spacing: 2px;
+        }
+        .contact-section p {
+            color: var(--text-muted); margin-bottom: 32px;
+            font-size: 1rem; max-width: 600px; margin-left: auto; margin-right: auto;
+        }
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 18px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .social-card {
+            background: #252525;
+            border: 1px solid #333;
+            border-radius: 16px;
+            padding: 24px 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .social-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 25px rgba(139, 92, 246, 0.3);
+        }
+        .social-card i {
+            font-size: 2.4rem;
+            margin-bottom: 6px;
+        }
+        .social-card .icon-tiktok { color: #ffffff; }
+        .social-card .icon-wsp { color: #25D366; }
+        .social-card .icon-fb { color: #1877F2; }
+        .social-card span {
+            font-weight: 700;
+            color: #fff;
+            font-size: 1rem;
+        }
+        .social-card small {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            text-align: center;
+        }
+
+        /* FOOTER */
+        .footer {
+            background: #1a1a1a; padding: 32px 24px;
+            text-align: center; color: var(--text-muted);
+            font-size: 0.9rem; border-top: 1px solid #2a2a2a;
+        }
+        .footer a { color: var(--primary-light); }
+        .footer a:hover { text-decoration: underline; }
+
+        /* TOAST */
+        .toast {
+            position: fixed; bottom: 30px; left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: var(--primary); color: white;
+            padding: 12px 28px; border-radius: 40px;
+            font-weight: 600; box-shadow: var(--shadow-md);
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.2s, transform 0.2s;
+            z-index: 2000; font-size: 0.95rem;
+            text-align: center; max-width: 90%;
+        }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        /* ===================================================== */
+        /* ✅ LIGHTBOX (NUEVO) - Visor de imágenes ampliadas    */
+        /* ===================================================== */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(6px);
+            z-index: 3000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .lightbox.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .lightbox__close {
+            position: absolute;
+            top: 20px;
+            right: 24px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            font-size: 1.8rem;
+            line-height: 1;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3001;
+        }
+        .lightbox__close:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            transform: rotate(90deg);
+        }
+        .lightbox__img {
+            max-width: 90vw;
+            max-height: 70vh;
+            object-fit: contain;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+            background: #000;
+            animation: lightboxZoomIn 0.3s ease;
+        }
+        @keyframes lightboxZoomIn {
+            from { transform: scale(0.85); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .lightbox__info {
+            margin-top: 20px;
+            text-align: center;
+            max-width: 600px;
+            padding: 0 16px;
+        }
+        .lightbox__category {
+            font-size: 0.8rem;
+            color: var(--primary-light);
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            display: block;
+            margin-bottom: 6px;
+        }
+        .lightbox__title {
+            font-size: 1.3rem;
+            color: #ffffff;
+            font-weight: 700;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+        .lightbox__price {
+            font-size: 1.5rem;
+            color: var(--primary-light);
+            font-weight: 800;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            :root { --header-height: 64px; }
+            .header { padding: 0 16px; }
+            .logo { font-size: 1.8rem; }
+            .logo-animated-img { height: 45px; }
+            .nav__links { display: none; }
+            .cart-icon { width: 44px; height: 44px; font-size: 1.3rem; }
+            .hero { padding: 28px 20px; text-align: center; flex-direction: column; }
+            .hero h1 { font-size: 1.5rem; }
+            .hero p { font-size: 0.9rem; }
+            .section-title { font-size: 1.5rem; }
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 16px; padding: 10px 8px 30px 8px;
+            }
+            .product-image-container { height: 200px; }
+            .cart-panel { max-width: 100%; border-radius: 0; padding: 20px 16px; }
+            .contact-section { padding: 32px 20px; }
+            .contact-section h2 { font-size: 1.5rem; }
+
+            /* Lightbox responsive */
+            .lightbox { padding: 20px 12px; }
+            .lightbox__close {
+                top: 12px; right: 12px;
+                width: 38px; height: 38px;
+                font-size: 1.5rem;
+            }
+            .lightbox__img {
+                max-width: 95vw;
+                max-height: 60vh;
+            }
+            .lightbox__title { font-size: 1.05rem; }
+            .lightbox__price { font-size: 1.2rem; }
+        }
+        @media (max-width: 400px) {
+            .products-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header__container">
+            <a href="#inicio" class="logo">
+                <img src="imagenes/logo.png" alt="Logo Crissiel" class="logo-animated-img">
+                Crissiel
+            </a>
+            <nav class="nav">
+                <div class="nav__links">
+                    <a href="#inicio">Inicio</a>
+                    <a href="#productos">Productos</a>
+                    <a href="#contacto">Contacto</a>
+                </div>
+                <div class="cart-icon" id="cartIcon">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- MAIN -->
+    <main class="main">
+        <section class="hero" id="inicio">
+            <div>
+                <h1>Descubre nuestra colección y variedad</h1>
+                <p>Prendas exclusivas, street style y la esencia de Crissiel.</p>
+                <span class="badge">Mejora tu Estilo</span>
+            </div>
+            <img src="imagenes/banner1.jpg" alt="Banner Crissiel">
+        </section>
+
+        <h2 class="section-title" id="productos">
+            <i class="fas fa-bolt"></i> Productos destacados
+        </h2>
+
+        <div class="category-filters">
+            <button class="filter-btn active" data-filter="all">Todos</button>
+            <button class="filter-btn" data-filter="hombre">Ropa de Hombre</button>
+            <button class="filter-btn" data-filter="mujer">Ropa de Mujer</button>
+            <button class="filter-btn" data-filter="pijamas">Pijamas</button>
+            <button class="filter-btn" data-filter="perfumes-hombre">Perfumes Hombre</button>
+            <button class="filter-btn" data-filter="perfumes-mujer">Perfumes Mujer</button>
+            <button class="filter-btn" data-filter="joyeria">Joyería</button>
+            <button class="filter-btn" data-filter="zapatillas">Zapatillas</button>
+        </div>
+
+        <div class="products-grid" id="productsGrid"></div>
+
+        <!-- CONTACTO / REDES -->
+        <section class="contact-section" id="contacto">
+            <h2>Contáctanos</h2>
+            <p>Síguenos en nuestras redes sociales o escríbenos directamente por WhatsApp para cualquier consulta, pedido o colaboración.</p>
+
+            <div class="social-grid">
+                <a href="https://www.tiktok.com/@crissiel_cl?is_from_webapp=1&sender_device=pc" target="_blank" rel="noopener" class="social-card">
+                    <i class="fab fa-tiktok icon-tiktok"></i>
+                    <span>TikTok Principal</span>
+                    <small>@crissiel_cl</small>
+                </a>
+                <a href="https://www.tiktok.com/@crissiel_cl2?is_from_webapp=1&sender_device=pc" target="_blank" rel="noopener" class="social-card">
+                    <i class="fab fa-tiktok icon-tiktok"></i>
+                    <span>TikTok Secundaria</span>
+                    <small>@crissiel_cl2</small>
+                </a>
+                <a href="https://wa.me/51965417107" target="_blank" rel="noopener" class="social-card">
+                    <i class="fab fa-whatsapp icon-wsp"></i>
+                    <span>WhatsApp</span>
+                    <small>+51 965 417 107</small>
+                </a>
+                <a href="https://www.facebook.com/profile.php?id=61581262021537&locale=es_LA" target="_blank" rel="noopener" class="social-card">
+                    <i class="fab fa-facebook icon-fb"></i>
+                    <span>Facebook</span>
+                    <small>Crissiel</small>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>© 2025 Crissiel — Todos los derechos reservados.</p>
+        <p style="margin-top:8px;">
+            <i class="fab fa-whatsapp" style="color:#25D366;"></i> Escríbenos al 
+            <a href="https://wa.me/51965417107" target="_blank" rel="noopener">+51 965 417 107</a>
+        </p>
+    </footer>
+
+    <!-- CARRITO -->
+    <div class="overlay" id="overlay"></div>
+    <aside class="cart-panel" id="cartPanel">
+        <div class="cart-panel__header">
+            <h2><i class="fas fa-shopping-bag" style="margin-right: 8px;"></i>Tu carrito</h2>
+            <button class="close-cart" id="closeCartBtn">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItemsContainer">
+            <div class="empty-cart-message">El carrito está vacío</div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cartTotal">S/ 0.00</span>
+            </div>
+            <button class="btn-checkout" id="checkoutBtn">
+                <i class="fab fa-whatsapp"></i> Pedir por WhatsApp
+            </button>
+        </div>
+    </aside>
+
+    <div class="toast" id="toast"></div>
+
+    <!-- ✅ LIGHTBOX (NUEVO) - Visor de imágenes ampliadas -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox__close" id="lightboxClose" aria-label="Cerrar">&times;</button>
+        <img src="" alt="" class="lightbox__img" id="lightboxImg">
+        <div class="lightbox__info">
+            <span class="lightbox__category" id="lightboxCategory"></span>
+            <h3 class="lightbox__title" id="lightboxTitle"></h3>
+            <span class="lightbox__price" id="lightboxPrice"></span>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script>
+    (function() {
+        // =========================================================
+        // ⚙️ CONFIGURACIÓN
+        // =========================================================
+        const WHATSAPP_NUMBER = '51965417107';
+        const NOMBRE_TIENDA = 'Crissiel';
+
+        // =========================================================
+        // CATÁLOGO DE PRODUCTOS
+        // Rutas EXACTAS de los archivos (con tildes, mayúsculas,
+        // comas, paréntesis, etc.). Título y descripción corregidos.
+        // =========================================================
+        const products = [
+            // ================= PERFUMES HOMBRE =================
+            { id: 1, title: 'Perfume Royal Diadem By V.V Love', desc: 'Dulce, cálido, avainillado', price: 30.00, image: 'imagenes/perfumehom_30soles_01.webp', category: 'perfumes-hombre' },
+
+            // ================= PERFUMES MUJER =================
+            { id: 2, title: 'Eau de Toilette MISSY G.G. 100 ml – V.V.LOVE', desc: 'Fragancia femenina, elegante y fresca', price: 25.00, image: 'imagenes/perfumemuj_25soles_02.jpg', category: 'perfumes-mujer' },
+            { id: 3, title: 'Perfume de Mujer Indian Collection x 100ml VLT195', desc: 'Aroma exótico y sofisticado', price: 25.00, image: 'imagenes/perfumemuj_25soles_03.jpg', category: 'perfumes-mujer' },
+            { id: 4, title: 'Perfume Rainbow Clouds Para Dama Dulce Gourmand No Empalaga', desc: 'Dulce gourmand, no empalaga', price: 25.00, image: 'imagenes/perfumemuj_25soles_04.webp', category: 'perfumes-mujer' },
+            { id: 5, title: 'Perfume Woman YBL115 100 ml - INDIAN COLLECTION', desc: 'Fragancia femenina con carácter', price: 25.00, image: 'imagenes/perfumemuj_25soles_05.jpg', category: 'perfumes-mujer' },
+            { id: 6, title: 'Perfume Inspiración Árabe Dusk Embrace 100ml - V.V LOVE', desc: 'Inspiración árabe, intenso y duradero', price: 25.00, image: 'imagenes/perfumemuj_25soles_06.jpg', category: 'perfumes-mujer' },
+            { id: 7, title: 'Perfume Para Mujer Indian Collection 100 ml. Marc Jacobs', desc: 'Inspirado en Marc Jacobs, floral y elegante', price: 25.00, image: 'imagenes/perfumemuj_25soles_01.png', category: 'perfumes-mujer' },
+            { id: 8, title: 'Rose & Lin Collection Lovali Fragrances de 250 ml', desc: 'Aroma floral y fresco, 250 ml', price: 15.00, image: 'imagenes/perfumemuj_15soles_02.jpg', category: 'perfumes-mujer' },
+            { id: 9, title: 'Body Splash Refreshing Sweet de V.V. Aroma Corporal', desc: 'Body splash refrescante y dulce', price: 15.00, image: 'imagenes/perfumemuj_15soles_01.jpg', category: 'perfumes-mujer' },
+
+            // ================= ROPA DE HOMBRE =================
+            { id: 10, title: 'Polo Camisero color blanco', desc: 'Polo camisero clásico, color blanco', price: 25.00, image: 'imagenes/ropahombre_25soles_01.jpg', category: 'hombre' },
+            { id: 11, title: 'Polo Camisero color verde cálido', desc: 'Polo camisero color verde cálido', price: 25.00, image: 'imagenes/ropahombre_25soles_02.jpg', category: 'hombre' },
+            { id: 12, title: 'Bividi color azul', desc: 'Bividi cómodo y fresco, color azul', price: 25.00, image: 'imagenes/ropahombre_25soles_03.png', category: 'hombre' },
+            { id: 13, title: 'Bividi color amarillo', desc: 'Bividi color amarillo, tela suave', price: 25.00, image: 'imagenes/ropahombre_25soles_04.png', category: 'hombre' },
+            { id: 14, title: 'Bividi color Verde militar', desc: 'Bividi color verde militar', price: 25.00, image: 'imagenes/ropahombre_25soles_05.png', category: 'hombre' },
+            { id: 15, title: 'Polo color marrón con diseño Godspeed', desc: 'Diseño Godspeed, color marrón', price: 25.00, image: 'imagenes/ropahombre_25soles_06.jpg', category: 'hombre' },
+            { id: 16, title: 'Polo color negro con diseño Godspeed', desc: 'Diseño Godspeed, color negro', price: 25.00, image: 'imagenes/ropahombre_25soles_07.jpg', category: 'hombre' },
+            { id: 17, title: 'Polo rojo con diseño aesthetic', desc: 'Diseño aesthetic, color rojo', price: 25.00, image: 'imagenes/ropahombre_25soles_08.jpg', category: 'hombre' },
+            { id: 18, title: 'Polo negro con estilo gótico', desc: 'Estilo gótico, color negro', price: 25.00, image: 'imagenes/ropahombre_25soles_09.jpg', category: 'hombre' },
+            { id: 19, title: 'Polo negro con diseño Coach', desc: 'Diseño Coach, color negro', price: 25.00, image: 'imagenes/ropahombre_25soles_10.png', category: 'hombre' },
+            { id: 20, title: 'Polo Boss color crema', desc: 'Polo Boss color crema', price: 30.00, image: 'imagenes/ropahombre_30soles_polo_boss_color_crema.jpg', category: 'hombre' },
+            { id: 21, title: 'Polo Boss color negro', desc: 'Polo Boss color negro', price: 30.00, image: 'imagenes/ropahombre_30soles_polo_boss_color_negro.jpg', category: 'hombre' },
+            { id: 22, title: 'Polo diseño aesthetic color rojo', desc: 'Polo diseño aesthetic color rojo', price: 30.00, image: 'imagenes/ropahombre_30soles_polo_diseñoaesthetic_color_rojo.jpg', category: 'hombre' },
+            { id: 23, title: 'Polo Dolce & Gabbana blanco', desc: 'Polo Dolce & Gabbana blanco', price: 30.00, image: 'imagenes/ropahombre_30soles_polo_dolcegabana_blanco.jpg', category: 'hombre' },
+            { id: 24, title: 'Polo Dolce & Gabbana color beige', desc: 'Polo Dolce & Gabbana color beige', price: 30.00, image: 'imagenes/ropahombre_30soles_polo_dolcegabana_color_beige.jpg', category: 'hombre' },
+            { id: 25, title: 'Pantalón cargo color verde', desc: 'Pantalón cargo color verde', price: 40.00, image: 'imagenes/ropahombre_40soles_pantalon_cargo_colorverde.jpg', category: 'hombre' },
+            { id: 26, title: 'Pantalón jean', desc: 'Pantalón jean clásico', price: 40.00, image: 'imagenes/ropahombre_40soles_pantalon_jean.jpg', category: 'hombre' },
+            { id: 27, title: 'Polera Mickey Mouse de Los Eagle color gris', desc: 'Polera Mickey Mouse de Los Eagle color gris', price: 45.00, image: 'imagenes/ropahombre_45soles_polera_mickeymousedeloseagle_colorgris.png', category: 'hombre' },
+            { id: 28, title: 'Polera Mickey Mouse de Los Eagle color gris y negro', desc: 'Polera Mickey Mouse de Los Eagle color gris y negro', price: 45.00, image: 'imagenes/ropahombre_45soles_polera_mickeymousedeloseagle_colorgrisynegro.png', category: 'hombre' },
+            { id: 29, title: 'Polera Mickey Mouse de Los Eagle color gris y verde', desc: 'Polera Mickey Mouse de Los Eagle color gris y verde', price: 45.00, image: 'imagenes/ropahombre_45soles_polera_mickeymousedeloseagle_colorgrisyverde.png', category: 'hombre' },
+
+            // ================= POLERAS =================
+            { id: 30, title: 'Polera color azul marino', desc: 'Polera básica color azul marino', price: 50.00, image: 'imagenes/polera_50soles_02.png', category: 'mujer' },
+            { id: 31, title: 'Polera color blanco', desc: 'Polera básica color blanco', price: 50.00, image: 'imagenes/polera_50soles_03.png', category: 'mujer' },
+            { id: 32, title: 'Polera color negro', desc: 'Polera básica color negro', price: 50.00, image: 'imagenes/polera_50soles_04.png', category: 'mujer' },
+            { id: 33, title: 'Polera color azul claro', desc: 'Polera básica color azul claro', price: 50.00, image: 'imagenes/polera_50soles_01.png', category: 'mujer' },
+            { id: 34, title: 'Polera color rojo con diseño', desc: 'Polera roja con diseño exclusivo', price: 35.00, image: 'imagenes/polera_35soles_01.jpg', category: 'mujer' },
+
+            // ================= PIJAMAS =================
+            { id: 35, title: 'Conjunto de pijama (polo + short) color blanco con lila con diseño de pato', desc: 'Polo + short, diseño de pato', price: 20.00, image: 'imagenes/pijama_20soles_02.jpg', category: 'pijamas' },
+            { id: 36, title: 'Conjunto de pijama con diseño de Stitch', desc: 'Conjunto con diseño de Stitch', price: 20.00, image: 'imagenes/pijama_20soles_03.png', category: 'pijamas' },
+            { id: 37, title: 'Conjunto de pijama con diseño de ositos', desc: 'Conjunto con diseño de ositos', price: 20.00, image: 'imagenes/pijama_20soles_01.png', category: 'pijamas' },
+            { id: 38, title: 'Conjunto de pijama con diseño de Minnie', desc: 'Conjunto con diseño de Minnie', price: 15.00, image: 'imagenes/pijama_15soles_02.jpg', category: 'pijamas' },
+            { id: 39, title: 'Pijama (enterizo) con diseño de Minnie', desc: 'Enterizo con diseño de Minnie', price: 15.00, image: 'imagenes/pijama_15soles_01.jpg', category: 'pijamas' },
+            { id: 40, title: 'Conjunto de pijama con diseño de Kuromi', desc: 'Conjunto con diseño de Kuromi', price: 25.00, image: 'imagenes/pijama_25soles_02.jpg', category: 'pijamas' },
+            { id: 41, title: 'Conjunto de pijama con diseño de Hello Kitty', desc: 'Conjunto con diseño de Hello Kitty', price: 25.00, image: 'imagenes/pijama_25soles_03.jpg', category: 'pijamas' },
+            { id: 42, title: 'Conjunto de pijama con diseño de Kuromi', desc: 'Conjunto con diseño de Kuromi', price: 25.00, image: 'imagenes/pijama_25soles_04.jpg', category: 'pijamas' },
+            { id: 43, title: 'Conjunto de pijama color blanco perleado', desc: 'Conjunto color blanco perleado', price: 25.00, image: 'imagenes/pijama_25soles_05.png', category: 'pijamas' },
+            { id: 44, title: 'Conjunto de pijama color rosado perleado', desc: 'Conjunto color rosado perleado', price: 25.00, image: 'imagenes/pijama_25soles_06.png', category: 'pijamas' },
+            { id: 45, title: 'Conjunto de pijama color dorado', desc: 'Conjunto color dorado', price: 25.00, image: 'imagenes/pijama_25soles_01.png', category: 'pijamas' },
+
+            // ================= ROPA DE MUJER (existentes) =================
+            { id: 46, title: 'Polo color rosado con diseño de Mickey', desc: 'Diseño de Mickey, color rosado', price: 25.00, image: 'imagenes/ropa_25soles_01.jpg', category: 'mujer' },
+            { id: 47, title: 'Polo color negro con diseño de Hello Kitty', desc: 'Diseño de Hello Kitty, color negro', price: 25.00, image: 'imagenes/ropa_25soles_02.jpg', category: 'mujer' },
+            { id: 48, title: 'Polo color blanco con diseño de cerezas', desc: 'Diseño de cerezas, color blanco', price: 15.00, image: 'imagenes/ropa_15soles_01.jpg', category: 'mujer' },
+            { id: 49, title: 'Polo rosado con diseño de Snoopy', desc: 'Diseño de Snoopy, color rosado', price: 15.00, image: 'imagenes/ropa_15soles_02.jpg', category: 'mujer' },
+            { id: 50, title: 'Polo color rosa pastel con diseño de mariposa', desc: 'Diseño de mariposa, color rosa pastel', price: 15.00, image: 'imagenes/ropa_15soles_03.jpg', category: 'mujer' },
+            { id: 51, title: 'Polo color rojo con diseño de Ariel', desc: 'Diseño de Ariel, color rojo', price: 15.00, image: 'imagenes/ropa_15soles_04.jpg', category: 'mujer' },
+            { id: 52, title: 'Polo Crop color celeste con diseño de Minnie', desc: 'Diseño de Minnie, color celeste', price: 15.00, image: 'imagenes/ropa_15soles_05.jpg', category: 'mujer' },
+            { id: 53, title: 'Polo color azul marino con diseño de mariposas', desc: 'Diseño de mariposas, color azul marino', price: 15.00, image: 'imagenes/ropa_15soles_06.png', category: 'mujer' },
+            { id: 54, title: 'Polo Crop con diseño de Jerry', desc: 'Diseño de Jerry, corte Crop', price: 15.00, image: 'imagenes/ropa_15soles_07.jpg', category: 'mujer' },
+            { id: 55, title: 'Polo color negro con diseño de Mickey', desc: 'Diseño de Mickey, color negro', price: 15.00, image: 'imagenes/ropa_15soles_08.jpg', category: 'mujer' },
+            { id: 56, title: 'Polo Crop color rosado cálido con diseño de Bambi', desc: 'Diseño de Bambi, color rosado cálido', price: 15.00, image: 'imagenes/ropa_15soles_09.jpg', category: 'mujer' },
+            { id: 57, title: 'Polo Crop color pastel con diseño de la Pantera Rosa', desc: 'Diseño de la Pantera Rosa, color pastel', price: 15.00, image: 'imagenes/ropa_15soles_010.jpg', category: 'mujer' },
+            { id: 58, title: 'Polo color negro con diseño de girasoles', desc: 'Diseño de girasoles, color negro', price: 15.00, image: 'imagenes/ropa_15soles_011.png', category: 'mujer' },
+            { id: 59, title: 'Polo color marrón claro con diseño de listones', desc: 'Diseño de listones, color marrón claro', price: 15.00, image: 'imagenes/ropa_15soles_012.png', category: 'mujer' },
+            { id: 60, title: 'Polo con cuello en V color gris', desc: 'Cuello en V, color gris', price: 15.00, image: 'imagenes/ropa_15soles_013.png', category: 'mujer' },
+            { id: 61, title: 'Polo color negro con diseño de listones', desc: 'Diseño de listones, color negro', price: 15.00, image: 'imagenes/ropa_15soles_014.png', category: 'mujer' },
+            { id: 62, title: 'Polo color naranja con diseño de listones', desc: 'Diseño de listones, color naranja', price: 15.00, image: 'imagenes/ropa_15soles_015.png', category: 'mujer' },
+            { id: 63, title: 'Polo color mostaza con diseño de abejas', desc: 'Diseño de abejas, color mostaza', price: 15.00, image: 'imagenes/ropa_15soles_016.png', category: 'mujer' },
+            { id: 64, title: 'Polo color rosado con diseño de Silvestre y Piolín', desc: 'Diseño de Silvestre y Piolín, color rosado', price: 20.00, image: 'imagenes/ropa_20soles_04.jpg', category: 'mujer' },
+            { id: 65, title: 'Polo color negro con diseño de Minnie', desc: 'Diseño de Minnie, color negro', price: 20.00, image: 'imagenes/ropa_20soles_01.jpg', category: 'mujer' },
+            { id: 66, title: 'Polo color azul con diseño de cereza', desc: 'Diseño de cereza, color azul', price: 20.00, image: 'imagenes/ropa_20soles_02.png', category: 'mujer' },
+            { id: 67, title: 'Polo color azul con diseño de rosas', desc: 'Diseño de rosas, color azul', price: 20.00, image: 'imagenes/ropa_20soles_03.png', category: 'mujer' },
+
+            // ================= ROPA DE MUJER (nuevas - prefijo ropamujer_) =================
+            { id: 68, title: 'Polo manga larga color celeste', desc: 'Polo manga larga color celeste', price: 10.00, image: 'imagenes/ropamujer_10soles_polomangalarga_colorceleste.jpg', category: 'mujer' },
+            { id: 69, title: 'Polo manga larga color naranja', desc: 'Polo manga larga color naranja', price: 10.00, image: 'imagenes/ropamujer_10soles_polomangalarga_colornaranja.jpg', category: 'mujer' },
+            { id: 70, title: 'Polo manga larga color rojo', desc: 'Polo manga larga color rojo', price: 10.00, image: 'imagenes/ropamujer_10soles_polomangalarga_colorrojo.jpg', category: 'mujer' },
+            { id: 71, title: 'Crop diseño Tom y Jerry', desc: 'Crop con diseño de Tom y Jerry', price: 15.00, image: 'imagenes/ropamujer_15soles_crop_diseño _tomyjerry.jpg', category: 'mujer' },
+            { id: 72, title: 'Crop diseño urbano color beige', desc: 'Crop diseño urbano color beige', price: 15.00, image: 'imagenes/ropamujer_15soles_crop_diseño_urbano_color_beige.jpg', category: 'mujer' },
+            { id: 73, title: 'Crop diseño urbano color rosado', desc: 'Crop diseño urbano color rosado', price: 15.00, image: 'imagenes/ropamujer_15soles_crop_diseño_urbano_color_rosado.jpg', category: 'mujer' },
+            { id: 74, title: 'Crop Hello Kitty', desc: 'Crop con diseño de Hello Kitty', price: 15.00, image: 'imagenes/ropamujer_15soles_crop_hellokitty.jpg', category: 'mujer' },
+            { id: 75, title: 'Falda color verde militar', desc: 'Falda color verde militar', price: 15.00, image: 'imagenes/ropamujer_15soles_falda_color_verde_militar.jpg', category: 'mujer' },
+            { id: 76, title: 'Falda color verde', desc: 'Falda color verde', price: 15.00, image: 'imagenes/ropamujer_15soles_falda_color_verde.jpg', category: 'mujer' },
+            { id: 77, title: 'Body color beige', desc: 'Body color beige', price: 20.00, image: 'imagenes/ropamujer_20soles_bodycolorbeige.jpg', category: 'mujer' },
+            { id: 78, title: 'Body color marrón', desc: 'Body color marrón', price: 20.00, image: 'imagenes/ropamujer_20soles_bodycolormarron.jpg', category: 'mujer' },
+            { id: 79, title: 'Body color rojo', desc: 'Body color rojo', price: 20.00, image: 'imagenes/ropamujer_20soles_bodycolororo.jpg', category: 'mujer' },
+            { id: 80, title: 'Body color plomo', desc: 'Body color plomo', price: 20.00, image: 'imagenes/ropamujer_20soles_bodycolorplomo.jpg', category: 'mujer' },
+            { id: 81, title: 'Body deportivo color azul', desc: 'Body deportivo color azul', price: 20.00, image: 'imagenes/ropamujer_20soles_bodydeportivo_colorazul.jpg', category: 'mujer' },
+            { id: 82, title: 'Body deportivo color negro', desc: 'Body deportivo color negro', price: 20.00, image: 'imagenes/ropamujer_20soles_bodydeportivo_colornegro.jpg', category: 'mujer' },
+            { id: 83, title: 'Body deportivo color rojo', desc: 'Body deportivo color rojo', price: 20.00, image: 'imagenes/ropamujer_20soles_bodydeportivo_colorrojo.jpg', category: 'mujer' },
+            { id: 84, title: 'Conjunto (polera + falda) color blanco y negro', desc: 'Conjunto polera + falda color blanco y negro', price: 20.00, image: 'imagenes/ropamujer_20soles_conjunto(polera+falda)colorblancoynegro.jpg', category: 'mujer' },
+            { id: 85, title: 'Conjunto (polera + falda) color rosa y azul', desc: 'Conjunto polera + falda color rosa y azul', price: 20.00, image: 'imagenes/ropamujer_20soles_conjunto(polera+falda)colorrosayazul.jpg', category: 'mujer' },
+            { id: 86, title: 'Conjunto (polera + falda) color rosa y negro', desc: 'Conjunto polera + falda color rosa y negro', price: 20.00, image: 'imagenes/ropamujer_20soles_conjunto(polera+falda)colorrosaynegro.jpg', category: 'mujer' },
+            { id: 87, title: 'Buzo color negro', desc: 'Buzo color negro', price: 25.00, image: 'imagenes/ropamujer_25soles_buzo_coloranegro.jpg', category: 'mujer' },
+            { id: 88, title: 'Buzo color azul marino', desc: 'Buzo color azul marino', price: 25.00, image: 'imagenes/ropamujer_25soles_buzo_colorazulmarino.jpg', category: 'mujer' },
+            { id: 89, title: 'Buzo color gris', desc: 'Buzo color gris', price: 25.00, image: 'imagenes/ropamujer_25soles_buzo_colorgris.jpg', category: 'mujer' },
+            { id: 90, title: 'Conjunto deportivo (bividi + short) color rojo', desc: 'Conjunto deportivo bividi + short color rojo', price: 25.00, image: 'imagenes/ropamujer_25soles_conjuntodeportivo(bividi+short)_colorrojo.jpg', category: 'mujer' },
+            { id: 91, title: 'Conjunto deportivo (bividi + short) color vino', desc: 'Conjunto deportivo bividi + short color vino', price: 25.00, image: 'imagenes/ropamujer_25soles_conjuntodeportivo(bividi+short)_colorvino.png', category: 'mujer' },
+            { id: 92, title: 'Leggins color negro', desc: 'Leggins color negro', price: 25.00, image: 'imagenes/ropamujer_25soles_leggins_colornegro.png', category: 'mujer' },
+            { id: 93, title: 'Leggins color turquesa', desc: 'Leggins color turquesa', price: 25.00, image: 'imagenes/ropamujer_25soles_leggins_colorturqueza.png', category: 'mujer' },
+            { id: 94, title: 'Polivestido manga larga color beige', desc: 'Polivestido manga larga color beige', price: 25.00, image: 'imagenes/ropamujer_25soles_polivestidomangalarga_colorbeige.jpg', category: 'mujer' },
+            { id: 95, title: 'Polivestido manga larga color rosado', desc: 'Polivestido manga larga color rosado', price: 25.00, image: 'imagenes/ropamujer_25soles_polivestidomangalarga_colorrosado.jpg', category: 'mujer' },
+            { id: 96, title: 'Short color negro', desc: 'Short color negro', price: 28.00, image: 'imagenes/ropamujer_28soles_short_color_negro.jpg', category: 'mujer' },
+            { id: 97, title: 'Short jean', desc: 'Short jean', price: 28.00, image: 'imagenes/ropamujer_28soles_short_jean.jpg', category: 'mujer' },
+            { id: 98, title: 'Vestido color blanco y negro', desc: 'Vestido color blanco y negro', price: 30.00, image: 'imagenes/ropamujer_30soles_vestido_colorblancoynegro.jpg', category: 'mujer' },
+            { id: 99, title: 'Vestido color blanco y rojo', desc: 'Vestido color blanco y rojo', price: 30.00, image: 'imagenes/ropamujer_30soles_vestido_colorblancoyrojo.jpg', category: 'mujer' },
+
+            // ================= ZAPATILLAS =================
+            { id: 100, title: 'Zapatillas de hombre FASHION talla 40 color negro', desc: 'Zapatillas de hombre FASHION talla 40 color negro', price: 50.00, image: 'imagenes/zapatillas_50soles_zapatillasdehombreFASHION_talla40_colornegro.jpg', category: 'zapatillas' },
+            { id: 101, title: 'Zapatillas de hombre FASHION talla 42 color blanco', desc: 'Zapatillas de hombre FASHION talla 42 color blanco', price: 50.00, image: 'imagenes/zapatillas_50soles_zapatillasdehombreFASHION_talla42_colorblanco.jpg', category: 'zapatillas' },
+            { id: 102, title: 'Zapatilla de mujer New Cacy talla 37 color negro', desc: 'Zapatilla de mujer New Cacy talla 37 color negro', price: 80.00, image: 'imagenes/zapatillas_80soles_zapatillademujernewcacy_talla37_colornegro.png', category: 'zapatillas' },
+            { id: 103, title: 'Zapatillas de mujer Cacy talla 37 color blanco y rosado', desc: 'Zapatillas de mujer Cacy talla 37 color blanco y rosado', price: 80.00, image: 'imagenes/zapatillas_80soles_zapatillasdemujercacy_talla37_colorblancoyrosado.png', category: 'zapatillas' },
+            { id: 104, title: 'Zapatilla diseño Hello Kitty talla 38 color negro', desc: 'Zapatilla diseño Hello Kitty talla 38 color negro', price: 90.00, image: 'imagenes/zapatillas_90soles_zapatilladiseñohellokitty_talla38_colornegro.jpg', category: 'zapatillas' },
+            { id: 105, title: 'Zapatilla diseño Hello Kitty talla 39 color negro', desc: 'Zapatilla diseño Hello Kitty talla 39 color negro', price: 90.00, image: 'imagenes/zapatillas_90soles_zapatilladiseñohellokitty_talla39_colornegro.jpg', category: 'zapatillas' },
+            { id: 106, title: 'Zapatillas de hombre DDARIEMS talla 39 color blanco', desc: 'Zapatillas de hombre DDARIEMS talla 39 color blanco', price: 140.00, image: 'imagenes/zapatillas_140soles_zapatillasdehombreDDARIEMS_talla39_colorblanco.jpg', category: 'zapatillas' },
+            { id: 107, title: 'Zapatillas de hombre DDARIEMS talla 41 color blanco', desc: 'Zapatillas de hombre DDARIEMS talla 41 color blanco', price: 140.00, image: 'imagenes/zapatillas_140soles_zapatillasdehombreDDARIEMS_talla41_colorblanco.png', category: 'zapatillas' },
+            { id: 108, title: 'Zapatillas unisex IRUN talla 39 color blanco', desc: 'Zapatillas unisex IRUN talla 39 color blanco', price: 160.00, image: 'imagenes/zapatillas_160soles_zapatillasunisex_IRUN_talla39_colorblanco.png', category: 'zapatillas' },
+
+            // ================= JOYERÍA =================
+            { id: 109, title: 'Pulsera color celeste', desc: 'Pulsera color celeste', price: 6.00, image: 'imagenes/joyeria_6soles_pulsera_colorceleste.jpg', category: 'joyeria' },
+            { id: 110, title: 'Pulsera color celeste y rojo', desc: 'Pulsera color celeste y rojo', price: 6.00, image: 'imagenes/joyeria_6soles_pulsera_colorcelesterojo.jpg', category: 'joyeria' },
+            { id: 111, title: 'Pulsera color jade', desc: 'Pulsera color jade', price: 8.00, image: 'imagenes/joyeria_8soles_pulsera_colorjade.jpg', category: 'joyeria' },
+            { id: 112, title: 'Pulsera color rosado', desc: 'Pulsera color rosado', price: 8.00, image: 'imagenes/joyeria_8soles_pulsera_colorrosado.jpg', category: 'joyeria' },
+            { id: 113, title: 'Pulsera color rosado y blanco', desc: 'Pulsera color rosado y blanco', price: 8.00, image: 'imagenes/joyeria_8soles_pulsera_colorrosadoyblanco.jpg', category: 'joyeria' },
+            { id: 114, title: 'Pulsera color violeta y azul', desc: 'Pulsera color violeta y azul', price: 8.00, image: 'imagenes/joyeria_8soles_pulsera_colorvioletayazul.jpg', category: 'joyeria' },
+            { id: 115, title: 'Pulsera con diseño de corazones, en dorado y plateado, diseño a elección', desc: 'Pulsera con diseño de corazones, en dorado y plateado, diseño a elección', price: 10.00, image: 'imagenes/joyeria_10soles_pulsera_condiseñodezorazones,enrojoyplateado_diseñoaeleccion.jpg', category: 'joyeria' },
+            { id: 116, title: 'Pulsera con joya color jade', desc: 'Pulsera con joya color jade', price: 13.00, image: 'imagenes/joyeria_13soles_pulsera_conjoyacolorjade.jpg', category: 'joyeria' },
+            { id: 117, title: 'Pulsera reloj con joyas color jade', desc: 'Pulsera reloj con joyas color jade', price: 15.00, image: 'imagenes/joyeria_15soles_pulserarelojconjoyascolorjade.jpg', category: 'joyeria' },
+            { id: 118, title: 'Pulsera reloj con joyas de colores', desc: 'Pulsera reloj con joyas de colores', price: 15.00, image: 'imagenes/joyeria_15soles_pulserarelojconjoyasdecolores.jpg', category: 'joyeria' },
+            { id: 119, title: 'Pulsera reloj con joyas rojas', desc: 'Pulsera reloj con joyas rojas', price: 15.00, image: 'imagenes/joyeria_15soles_pulserarelojconjoyasrojas.jpg', category: 'joyeria' },
+            { id: 120, title: 'Anillo con joya color dorado', desc: 'Anillo con joya color dorado', price: 17.00, image: 'imagenes/joyeria_17soles_anilloconjoyacolordorado.jpg', category: 'joyeria' },
+            { id: 121, title: 'Anillo con joya diseño de flor color dorado', desc: 'Anillo con joya diseño de flor color dorado', price: 17.00, image: 'imagenes/joyeria_17soles_anilloconjoyadiseñodeflorcolordorado.jpg', category: 'joyeria' },
+            { id: 122, title: 'Anillo con joya en forma de corazón color dorado', desc: 'Anillo con joya en forma de corazón color dorado', price: 17.00, image: 'imagenes/joyeria_17soles_anilloconjoyaenformadecorazoncolordorado.jpg', category: 'joyeria' },
+            { id: 123, title: 'Anillo con joya en forma de mariposa color dorado', desc: 'Anillo con joya en forma de mariposa color dorado', price: 17.00, image: 'imagenes/joyeria_17soles_anilloconjoyaenformademariposacolordorado.jpg', category: 'joyeria' },
+            { id: 124, title: 'Anillo con joya mediana color dorado', desc: 'Anillo con joya mediana color dorado', price: 17.00, image: 'imagenes/joyeria_17soles_anilloconjoyamedianacolordorado.jpg', category: 'joyeria' },
+            { id: 125, title: 'Aretes marca Xuping con diseño de ancla color dorado', desc: 'Aretes marca Xuping con diseño de ancla color dorado', price: 18.00, image: 'imagenes/joyeria_18soles_aretesmarcaxupingcondiseñodeanclacolordorado.jpg', category: 'joyeria' },
+            { id: 126, title: 'Aretes marca Xuping con diseño de arcos color dorado', desc: 'Aretes marca Xuping con diseño de arcos color dorado', price: 18.00, image: 'imagenes/joyeria_18soles_aretesmarcaxupingcondiseñodearoscolordorado.jpg', category: 'joyeria' },
+            { id: 127, title: 'Aretes marca Xuping con diseño de corazón con alas color dorado', desc: 'Aretes marca Xuping con diseño de corazón con alas color dorado', price: 18.00, image: 'imagenes/joyeria_18soles_aretesmarcaxupingcondiseñodecorazonconalascolordorado.jpg', category: 'joyeria' },
+            { id: 128, title: 'Aretes marca Xuping con diseño de cruz color dorado', desc: 'Aretes marca Xuping con diseño de cruz color dorado', price: 18.00, image: 'imagenes/joyeria_18soles_aretesmarcaxupingcondiseñodecruzcolordorado.jpg', category: 'joyeria' },
+            { id: 129, title: 'Aretes marca Xuping con diseño de ojos color dorado', desc: 'Aretes marca Xuping con diseño de ojos color dorado', price: 18.00, image: 'imagenes/joyeria_18soles_aretesmarcaxupingcondiseñodeojoscolordorado.jpg', category: 'joyeria' },
+            { id: 130, title: 'Reloj diseño circular color dorado', desc: 'Reloj diseño circular color dorado', price: 20.00, image: 'imagenes/joyeria_20soles_relojdiseñocircularcolordorado.jpg', category: 'joyeria' },
+            { id: 131, title: 'Reloj diseño circular color plateado', desc: 'Reloj diseño circular color plateado', price: 20.00, image: 'imagenes/joyeria_20soles_relojdiseñocircularcolorplateado.jpg', category: 'joyeria' },
+            { id: 132, title: 'Reloj diseño circular con joyas color dorado', desc: 'Reloj diseño circular con joyas color dorado', price: 20.00, image: 'imagenes/joyeria_20soles_relojdiseñocircularconjoyascolordorado.jpg', category: 'joyeria' },
+            { id: 133, title: 'Reloj diseño clásico color plateado', desc: 'Reloj diseño clásico color plateado', price: 20.00, image: 'imagenes/joyeria_20soles_relojdiseñoclasicocolorplateado.jpg', category: 'joyeria' },
+            { id: 134, title: 'Reloj diseño cuadrado color oro', desc: 'Reloj diseño cuadrado color oro', price: 20.00, image: 'imagenes/joyeria_20soles_relojdiseñocuaddradocolororo.jpg', category: 'joyeria' },
+            { id: 135, title: 'Reloj diseño cuadrado con joyas color oro', desc: 'Reloj diseño cuadrado con joyas color oro', price: 20.00, image: 'imagenes/joyeria_20soles_relojdiseñocuadradoconjoyascolororo.jpg', category: 'joyeria' },
+            { id: 136, title: 'Reloj diseño elegante color oro', desc: 'Reloj diseño elegante color oro', price: 20.00, image: 'imagenes/joyeria_20soles_relojdiseñoelegantecolorororo.jpg', category: 'joyeria' },
+            { id: 137, title: 'Reloj diseño fino color plateado', desc: 'Reloj diseño fino color plateado', price: 20.00, image: 'imagenes/joyeria_20soles_relojdiseñofinocolorplateado.jpg', category: 'joyeria' },
+            { id: 138, title: 'Joyeros originales Hello Kitty color rosado', desc: 'Joyeros originales Hello Kitty color rosado', price: 25.00, image: 'imagenes/joyeria_25soles_joyeros_originales_hellokitty_colorrosado.jpg', category: 'joyeria' },
+            { id: 139, title: 'Joyeros originales Hello Kitty', desc: 'Joyeros originales Hello Kitty', price: 25.00, image: 'imagenes/joyeria_25soles_joyeros_originales_hellokitty.jpg', category: 'joyeria' },
+            { id: 140, title: 'Joyeros originales Kuromi', desc: 'Joyeros originales Kuromi', price: 25.00, image: 'imagenes/joyeria_25soles_joyeros_originales_kuromi.jpg', category: 'joyeria' },
+            { id: 141, title: 'Cadena con joya dorado', desc: 'Cadena con joya dorado', price: 28.00, image: 'imagenes/joyeria_28soles_cadena_conjoya_dorado.jpg', category: 'joyeria' },
+            { id: 142, title: 'Cadena con joya y diseño de cereza dorado', desc: 'Cadena con joya y diseño de cereza dorado', price: 28.00, image: 'imagenes/joyeria_28soles_cadena_conjoyaendiseñodecereza_dorado.jpg', category: 'joyeria' },
+            { id: 143, title: 'Cadena con letra A dorado', desc: 'Cadena con letra A dorado', price: 28.00, image: 'imagenes/joyeria_28soles_cadena_conlaletra_A_dorado.jpg', category: 'joyeria' },
+            { id: 144, title: 'Cadena con letra B dorado', desc: 'Cadena con letra B dorado', price: 28.00, image: 'imagenes/joyeria_28soles_cadena_conlaletra_B_dorado.jpg', category: 'joyeria' },
+            { id: 145, title: 'Cadena con letra D dorado', desc: 'Cadena con letra D dorado', price: 28.00, image: 'imagenes/joyeria_28soles_cadena_conlaletra_D_dorado.jpg', category: 'joyeria' },
+            { id: 146, title: 'Cadena con letra E dorado', desc: 'Cadena con letra E dorado', price: 28.00, image: 'imagenes/joyeria_28soles_cadena_conlaletra_E_dorado.jpg', category: 'joyeria' },
+            { id: 147, title: 'Cadena con letra J dorado', desc: 'Cadena con letra J dorado', price: 28.00, image: 'imagenes/joyeria_28soles_cadena_conlaletra_J_dorado.jpg', category: 'joyeria' },
+            { id: 148, title: 'Cadena con letra L dorado', desc: 'Cadena con letra L dorado', price: 28.00, image: 'imagenes/joyeria_28soles_cadena_conlaletra_L_dorado.jpg', category: 'joyeria' },
+            { id: 149, title: 'Cadena con letra M dorado', desc: 'Cadena con letra M dorado', price: 28.00, image: 'imagenes/joyeria_28soles_cadena_conlaletra_M_dorado.jpg', category: 'joyeria' },
+            { id: 150, title: 'Cadena con letra R dorado', desc: 'Cadena con letra R dorado', price: 28.00, image: 'imagenes/joyeria_28soles_cadena_conlaletra_R_dorado.jpg', category: 'joyeria' },
+            { id: 151, title: 'Cadena con letra T dorado', desc: 'Cadena con letra T dorado', price: 28.00, image: 'imagenes/joyeria_28soles_cadena_conlaletra_T_dorado.jpg', category: 'joyeria' },
+            { id: 152, title: 'Cadena con letra Y dorado', desc: 'Cadena con letra Y dorado', price: 28.00, image: 'imagenes/joyeria_28soles_cadena_conlaletra_Y_dorado.jpg', category: 'joyeria' },
+            { id: 153, title: 'Cadena diseño corazón dorado', desc: 'Cadena diseño corazón dorado', price: 28.00, image: 'imagenes/joyeria_28soles_cadena_diseñocorazon_dorado.jpg', category: 'joyeria' },
+            { id: 154, title: 'Cadena diseño de cerezas dorado', desc: 'Cadena diseño de cerezas dorado', price: 28.00, image: 'imagenes/joyeria_28soles_cadena_diseñodecerezas_dorado.jpg', category: 'joyeria' },
+            { id: 155, title: 'Cadena diseño de cruz dorado', desc: 'Cadena diseño de cruz dorado', price: 28.00, image: 'imagenes/joyeria_28soles_cadena_diseñodecruz_dorado.jpg', category: 'joyeria' },
+            { id: 156, title: 'Cadena diseño de flor dorado', desc: 'Cadena diseño de flor dorado', price: 28.00, image: 'imagenes/joyeria_28soles_cadena_diseñodeflor_dorado.jpg', category: 'joyeria' },
+            { id: 157, title: 'Cadena diseño de manzana dorado', desc: 'Cadena diseño de manzana dorado', price: 28.00, image: 'imagenes/joyeria_28soles_cadena_diseñodemanzana_dorado.jpg', category: 'joyeria' },
+            { id: 158, title: 'Cadena diseño estrella dorado', desc: 'Cadena diseño estrella dorado', price: 28.00, image: 'imagenes/joyeria_28soles_cadena_diseñoestrella_dorado.jpg', category: 'joyeria' },
+            { id: 159, title: 'Reloj Cinnamoroll', desc: 'Reloj Cinnamoroll', price: 40.00, image: 'imagenes/joyeria_40soles_reloj_cinnamoroll.jpg', category: 'joyeria' },
+            { id: 160, title: 'Reloj Hello Kitty', desc: 'Reloj Hello Kitty', price: 40.00, image: 'imagenes/joyeria_40soles_reloj_hellokitty.jpg', category: 'joyeria' }
+        ];
+
+        // =========================================================
+        // ESTADO DEL CARRITO
+        // =========================================================
+        let cart = [];
+
+        // =========================================================
+        // REFERENCIAS AL DOM
+        // =========================================================
+        const productsGrid = document.getElementById('productsGrid');
+        const cartPanel = document.getElementById('cartPanel');
+        const cartIcon = document.getElementById('cartIcon');
+        const closeCartBtn = document.getElementById('closeCartBtn');
+        const overlay = document.getElementById('overlay');
+        const cartItemsContainer = document.getElementById('cartItemsContainer');
+        const cartCount = document.getElementById('cartCount');
+        const cartTotal = document.getElementById('cartTotal');
+        const checkoutBtn = document.getElementById('checkoutBtn');
+        const toast = document.getElementById('toast');
+
+        // ✅ Lightbox - referencias
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightboxImg');
+        const lightboxClose = document.getElementById('lightboxClose');
+        const lightboxTitle = document.getElementById('lightboxTitle');
+        const lightboxCategory = document.getElementById('lightboxCategory');
+        const lightboxPrice = document.getElementById('lightboxPrice');
+
+        // =========================================================
+        // RENDERIZAR PRODUCTOS
+        // =========================================================
+        function renderProducts(filter = 'all') {
+            const filtered = filter === 'all'
+                ? products
+                : products.filter(p => p.category === filter);
+
+            if (filtered.length === 0) {
+                productsGrid.innerHTML = '<p style="color:#9ca3af;text-align:center;grid-column:1/-1;">No hay productos en esta categoría.</p>';
+                return;
+            }
+
+            productsGrid.innerHTML = filtered.map(product => `
+                <div class="product-card" data-category="${product.category}">
+                    <div class="product-image-container" data-id="${product.id}" title="Clic para ampliar">
+                        <img src="${product.image}" alt="${product.title}" class="product-img" loading="lazy"
+                             onerror="this.onerror=null;this.src='https://via.placeholder.com/300x300/1a1a1a/8b5cf6?text=Crissiel';">
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">${getCategoryName(product.category)}</span>
+                        <h3 class="product-title">${product.title}</h3>
+                        <p class="product-desc">${product.desc}</p>
+                        <span class="product-price">S/ ${product.price.toFixed(2)}</span>
+                        <button class="add-to-cart-btn" data-id="${product.id}">
+                            <i class="fas fa-cart-plus"></i> Añadir al carrito
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            // Eventos para añadir al carrito
+            document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    addToCart(Number(btn.dataset.id));
+                });
+            });
+
+            // ✅ NUEVO: Eventos para abrir el lightbox al hacer clic en la imagen
+            document.querySelectorAll('.product-image-container').forEach(container => {
+                container.addEventListener('click', () => {
+                    const id = Number(container.dataset.id);
+                    openLightbox(id);
+                });
+            });
+        }
+
+        function getCategoryName(cat) {
+            const names = {
+                'hombre': 'Hombre',
+                'mujer': 'Mujer',
+                'pijamas': 'Pijamas',
+                'perfumes-hombre': 'Perfume Hombre',
+                'perfumes-mujer': 'Perfume Mujer',
+                'joyeria': 'Joyería',
+                'zapatillas': 'Zapatillas'
+            };
+            return names[cat] || cat;
+        }
+
+        // =========================================================
+        // ✅ LIGHTBOX - Abrir / Cerrar
+        // =========================================================
+        function openLightbox(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            lightboxImg.src = product.image;
+            lightboxImg.alt = product.title;
+            lightboxTitle.textContent = product.title;
+            lightboxCategory.textContent = getCategoryName(product.category);
+            lightboxPrice.textContent = `S/ ${product.price.toFixed(2)}`;
+
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Bloquear scroll de fondo
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = ''; // Devolver scroll
+        }
+
+        // Cerrar con botón ✕
+        lightboxClose.addEventListener('click', closeLightbox);
+
+        // Cerrar al hacer clic fuera de la imagen
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeLightbox();
+        });
+
+        // Cerrar con tecla ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                closeLightbox();
+            }
+        });
+
+        // =========================================================
+        // AÑADIR AL CARRITO
+        // =========================================================
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            const existingItem = cart.find(item => item.id === productId);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: product.id,
+                    title: product.title,
+                    price: product.price,
+                    image: product.image,
+                    quantity: 1
+                });
+            }
+            updateCartUI();
+            showToast(`✔ ${product.title} añadido`);
+        }
+
+        // =========================================================
+        // ACTUALIZAR INTERFAZ DEL CARRITO
+        // =========================================================
+        function updateCartUI() {
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<div class="empty-cart-message">El carrito está vacío</div>';
+            } else {
+                cartItemsContainer.innerHTML = cart.map(item => `
+                    <div class="cart-item" data-id="${item.id}">
+                        <img src="${item.image}" alt="${item.title}" class="cart-item__img"
+                             onerror="this.onerror=null;this.src='https://via.placeholder.com/48/1a1a1a/8b5cf6?text=C';">
+                        <div class="cart-item__details">
+                            <div class="cart-item__title">${item.title}</div>
+                            <div class="cart-item__price">S/ ${item.price.toFixed(2)}</div>
+                        </div>
+                        <div class="cart-item__actions">
+                            <button class="decrease-qty" data-id="${item.id}">−</button>
+                            <span class="cart-item__qty">${item.quantity}</span>
+                            <button class="increase-qty" data-id="${item.id}">+</button>
+                        </div>
+                    </div>
+                `).join('');
+
+                document.querySelectorAll('.decrease-qty').forEach(btn => {
+                    btn.addEventListener('click', () => updateQuantity(Number(btn.dataset.id), -1));
+                });
+                document.querySelectorAll('.increase-qty').forEach(btn => {
+                    btn.addEventListener('click', () => updateQuantity(Number(btn.dataset.id), 1));
+                });
+            }
+
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            cartTotal.textContent = `S/ ${total.toFixed(2)}`;
+        }
+
+        function updateQuantity(productId, delta) {
+            const index = cart.findIndex(item => item.id === productId);
+            if (index === -1) return;
+            const item = cart[index];
+            const newQty = item.quantity + delta;
+            if (newQty <= 0) {
+                cart.splice(index, 1);
+            } else {
+                item.quantity = newQty;
+            }
+            updateCartUI();
+        }
+
+        // =========================================================
+        // NOTIFICACIÓN TOAST
+        // =========================================================
+        let toastTimeout;
+        function showToast(message) {
+            toast.textContent = message;
+            toast.classList.add('show');
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+
+        // =========================================================
+        // ABRIR / CERRAR CARRITO
+        // =========================================================
+        function openCart() {
+            cartPanel.classList.add('open');
+            overlay.classList.add('active');
+        }
+        function closeCart() {
+            cartPanel.classList.remove('open');
+            overlay.classList.remove('active');
+        }
+
+        cartIcon.addEventListener('click', openCart);
+        closeCartBtn.addEventListener('click', closeCart);
+        overlay.addEventListener('click', closeCart);
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && cartPanel.classList.contains('open')) closeCart();
+        });
+
+        // =========================================================
+        // CHECKOUT POR WHATSAPP
+        // =========================================================
+        checkoutBtn.addEventListener('click', () => {
+            if (cart.length === 0) {
+                showToast('🛒 El carrito está vacío');
+                return;
+            }
+
+            let mensaje = `¡Hola *${NOMBRE_TIENDA}*! 👋%0A%0A`;
+            mensaje += `Quiero realizar el siguiente pedido:%0A%0A`;
+
+            cart.forEach((item, index) => {
+                const subtotal = (item.price * item.quantity).toFixed(2);
+                mensaje += `${index + 1}. *${item.title}*%0A`;
+                mensaje += `   Cantidad: ${item.quantity}%0A`;
+                mensaje += `   Precio unitario: S/ ${item.price.toFixed(2)}%0A`;
+                mensaje += `   Subtotal: S/ ${subtotal}%0A%0A`;
+            });
+
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            mensaje += `━━━━━━━━━━━━━━━━━━%0A`;
+            mensaje += `*TOTAL A PAGAR: S/ ${total.toFixed(2)}*%0A`;
+            mensaje += `━━━━━━━━━━━━━━━━━━%0A%0A`;
+            mensaje += `Por favor, indíquenme cómo proceder con el pago. ¡Gracias! 🙌`;
+
+            const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${mensaje}`;
+            window.open(url, '_blank');
+
+            showToast('📲 Abriendo WhatsApp con tu pedido...');
+        });
+
+        // =========================================================
+        // FILTROS POR CATEGORÍA
+        // =========================================================
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                renderProducts(btn.dataset.filter);
+            });
+        });
+
+        // =========================================================
+        // INICIALIZAR
+        // =========================================================
+        renderProducts('all');
+        updateCartUI();
+    })();
+    </script>
+</body>
+</html>
