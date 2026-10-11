@@ -6,6 +6,8 @@
     <title>Crissiel</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Wet+Paint&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif; }
 
@@ -94,19 +96,142 @@
             border: 2px solid #1e1e1e;
         }
 
+        /* ===================================================== */
+        /* ✅ FRANJA MOVIBLE - RUBIK WET PAINT SIN BRILLO       */
+        /* ===================================================== */
+        .marquee {
+            width: 100%;
+            overflow: hidden;
+            padding: 18px 0;
+            position: relative;
+            pointer-events: none;
+            user-select: none;
+            -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
+            mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
+            margin: 0 0 40px 0;
+        }
+        .marquee__track {
+            display: flex;
+            white-space: nowrap;
+            animation: marqueeScroll 40s linear infinite;
+            width: max-content;
+        }
+        .marquee__item {
+            display: inline-flex;
+            align-items: center;
+            gap: 28px;
+            padding: 0 28px;
+            font-family: 'Rubik Wet Paint', cursive;
+            font-size: 1.25rem;
+            font-weight: 400;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #e5e5e5;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9), 0 1px 0 rgba(0, 0, 0, 0.6);
+        }
+        .marquee__item .sep {
+            color: #8b5cf6;
+            font-size: 1.25rem;
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: 900;
+            letter-spacing: -2px;
+            text-shadow: 0 2px 3px rgba(0, 0, 0, 0.8);
+        }
+        .marquee__item .sep.light {
+            color: #a78bfa;
+            letter-spacing: -2px;
+            text-shadow: 0 2px 3px rgba(0, 0, 0, 0.8);
+        }
+        .marquee__item .sep.tri {
+            color: #c4b5fd;
+            font-size: 0.9rem;
+            letter-spacing: 0;
+            text-shadow: 0 2px 3px rgba(0, 0, 0, 0.8);
+        }
+        @keyframes marqueeScroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
         /* MAIN */
         .main {
             flex: 1; max-width: 1280px; margin: 0 auto;
             padding: 32px 24px 64px; width: 100%;
         }
+
+        /* ===================================================== */
+        /* ✅ HERO - EFECTO HUMO REAL CON DOBLE CAPA            */
+        /* ===================================================== */
         .hero {
-            background: linear-gradient(120deg, #1a1a2e, #1e1e1e);
+            position: relative;
             border-radius: var(--radius);
-            padding: 40px 36px; margin-bottom: 48px;
+            margin-bottom: 48px;
+            overflow: hidden;
+            border: 1px solid #2a2a2a;
             box-shadow: var(--shadow-sm);
-            display: flex; flex-wrap: wrap;
-            justify-content: space-between; align-items: center;
-            gap: 20px; border: 1px solid #2a2a2a;
+            background: #0a0a0a;
+            min-height: 340px;
+            display: flex;
+            align-items: center;
+        }
+        /* Capa de HUMO: misma imagen con blur grande, baja opacidad
+           y máscara radial para que se desvanezca por completo */
+        .hero__smoke {
+            position: absolute;
+            inset: 0;
+            background-image: url('imagenes/barnner1.png');
+            background-size: contain;
+            background-position: right center;
+            background-repeat: no-repeat;
+            z-index: 0;
+            filter: blur(45px) saturate(1.1);
+            opacity: 1.00;
+            -webkit-mask-image: radial-gradient(
+                ellipse 65% 65% at 68% 50%,
+                #000 0%,
+                #000 40%,
+                rgba(0,0,0,0.7) 65%,
+                transparent 100%
+            );
+            mask-image: radial-gradient(
+                ellipse 65% 65% at 68% 50%,
+                #000 0%,
+                #000 40%,
+                rgba(0,0,0,0.7) 65%,
+                transparent 100%
+            );
+        }
+        /* Capa NÍTIDA: la imagen real encima, sin blur, con máscara radial suave */
+        .hero__image {
+            position: absolute;
+            inset: 0;
+            background-image: url('imagenes/barnner1.png');
+            background-size: contain;
+            background-position: right center;
+            background-repeat: no-repeat;
+            z-index: 1;
+            -webkit-mask-image: radial-gradient(
+                ellipse 75% 80% at 68% 50%,
+                #000 0%,
+                #000 55%,
+                rgba(0,0,0,0.85) 72%,
+                rgba(0,0,0,0.4) 88%,
+                transparent 100%
+            );
+            mask-image: radial-gradient(
+                ellipse 75% 80% at 68% 50%,
+                #000 0%,
+                #000 55%,
+                rgba(0,0,0,0.85) 72%,
+                rgba(0,0,0,0.4) 88%,
+                transparent 100%
+            );
+        }
+        .hero__content {
+            position: relative;
+            z-index: 3;
+            padding: 40px 36px;
+            max-width: 620px;
         }
         .hero h1 {
             font-size: 2rem; font-weight: 800; color: var(--text-dark);
@@ -114,7 +239,7 @@
             text-transform: uppercase; letter-spacing: 2px;
         }
         .hero p {
-            color: var(--text-muted); margin-top: 8px; font-size: 1rem;
+            color: #d1d5db; margin-top: 8px; font-size: 1rem;
             max-width: 500px; font-style: italic;
             text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600;
         }
@@ -125,7 +250,6 @@
             box-shadow: 0 8px 18px rgba(139,92,246,0.3);
             margin-top: 16px; display: inline-block;
         }
-        .hero img { max-width: 320px; width: 100%; border-radius: 12px; object-fit: cover; }
 
         .section-title {
             font-size: 1.8rem; font-weight: 700; color: var(--text-dark);
@@ -163,20 +287,64 @@
             border-radius: 16px; overflow: hidden;
             transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
             display: flex; flex-direction: column;
+            position: relative;
         }
         .product-card:hover {
             transform: translateY(-6px);
             border-color: #8b5cf6;
             box-shadow: 0 8px 25px rgba(139,92,246,0.25);
         }
+        .product-card.sold-out { opacity: 0.65; }
+        .product-card.sold-out:hover {
+            transform: translateY(-3px);
+            border-color: #555;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+        }
+        .product-card.sold-out .product-img {
+            filter: grayscale(0.85) brightness(0.7);
+        }
+        .product-card.sold-out:hover .product-img {
+            transform: none;
+            filter: grayscale(0.85) brightness(0.7);
+        }
+        .sold-out-badge {
+            position: absolute;
+            top: 20px;
+            right: -36px;
+            background: linear-gradient(135deg, #ef4444, #b91c1c);
+            color: #fff;
+            font-weight: 800;
+            font-size: 0.75rem;
+            letter-spacing: 1.5px;
+            padding: 6px 45px;
+            transform: rotate(45deg);
+            box-shadow: 0 4px 10px rgba(239,68,68,0.4);
+            z-index: 10;
+            text-transform: uppercase;
+            pointer-events: none;
+        }
+        .product-card.sold-out .product-title { color: #9ca3af; }
+        .product-card.sold-out .product-price {
+            color: #6b7280;
+            text-decoration: line-through;
+        }
+        .add-to-cart-btn.sold-out-btn {
+            background: #3a3a3a;
+            color: #9ca3af;
+            cursor: not-allowed;
+            border: 1px solid #444;
+        }
+        .add-to-cart-btn.sold-out-btn:hover { background: #3a3a3a; }
+
         .product-image-container {
             width: 100%; height: 260px; background: #000;
             overflow: hidden; display: flex; align-items: center; justify-content: center;
-            cursor: zoom-in; /* ✅ NUEVO: cursor indicando que se puede ampliar */
+            cursor: zoom-in;
+            position: relative;
         }
         .product-img {
             width: 100%; height: 100%; object-fit: cover;
-            transition: transform 0.4s ease;
+            transition: transform 0.4s ease, filter 0.3s ease;
         }
         .product-card:hover .product-img { transform: scale(1.05); }
         .product-info {
@@ -374,9 +542,7 @@
         }
         .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-        /* ===================================================== */
-        /* ✅ LIGHTBOX (NUEVO) - Visor de imágenes ampliadas    */
-        /* ===================================================== */
+        /* LIGHTBOX */
         .lightbox {
             position: fixed;
             inset: 0;
@@ -460,6 +626,12 @@
             color: var(--primary-light);
             font-weight: 800;
         }
+        .lightbox__price.sold-out {
+            color: #ef4444;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
 
         /* RESPONSIVE */
         @media (max-width: 768px) {
@@ -469,9 +641,21 @@
             .logo-animated-img { height: 45px; }
             .nav__links { display: none; }
             .cart-icon { width: 44px; height: 44px; font-size: 1.3rem; }
-            .hero { padding: 28px 20px; text-align: center; flex-direction: column; }
-            .hero h1 { font-size: 1.5rem; }
-            .hero p { font-size: 0.9rem; }
+            .hero { min-height: 260px; }
+            .hero__content { padding: 28px 20px; text-align: center; max-width: 100%; }
+            .hero h1 { font-size: 1.5rem; margin: 0 auto; }
+            .hero p { font-size: 0.9rem; margin: 8px auto 0; }
+            .hero__smoke, .hero__image {
+                background-position: center;
+            }
+            .hero__smoke {
+                -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, #000 0%, #000 35%, rgba(0,0,0,0.6) 65%, transparent 100%);
+                mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, #000 0%, #000 35%, rgba(0,0,0,0.6) 65%, transparent 100%);
+            }
+            .hero__image {
+                -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, #000 0%, #000 50%, rgba(0,0,0,0.7) 75%, transparent 100%);
+                mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, #000 0%, #000 50%, rgba(0,0,0,0.7) 75%, transparent 100%);
+            }
             .section-title { font-size: 1.5rem; }
             .products-grid {
                 grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
@@ -481,8 +665,21 @@
             .cart-panel { max-width: 100%; border-radius: 0; padding: 20px 16px; }
             .contact-section { padding: 32px 20px; }
             .contact-section h2 { font-size: 1.5rem; }
+            .sold-out-badge {
+                font-size: 0.65rem;
+                padding: 4px 40px;
+                top: 16px; right: -32px;
+            }
+            .marquee { padding: 14px 0; margin: 0 0 28px 0; }
+            .marquee__item {
+                font-size: 0.95rem;
+                letter-spacing: 1px;
+                padding: 0 18px;
+                gap: 18px;
+            }
+            .marquee__item .sep { font-size: 0.95rem; letter-spacing: -1px; }
+            .marquee__item .sep.tri { font-size: 0.7rem; }
 
-            /* Lightbox responsive */
             .lightbox { padding: 20px 12px; }
             .lightbox__close {
                 top: 12px; right: 12px;
@@ -527,14 +724,24 @@
 
     <!-- MAIN -->
     <main class="main">
+        <!-- HERO / INICIO - BANNER CON EFECTO HUMO DE DOBLE CAPA -->
         <section class="hero" id="inicio">
-            <div>
+            <div class="hero__smoke"></div>
+            <div class="hero__image"></div>
+            <div class="hero__content">
                 <h1>Descubre nuestra colección y variedad</h1>
                 <p>Prendas exclusivas, street style y la esencia de Crissiel.</p>
                 <span class="badge">Mejora tu Estilo</span>
             </div>
-            <img src="imagenes/banner1.jpg" alt="Banner Crissiel">
         </section>
+
+        <!-- ✅ FRANJA MOVIBLE - RUBIK WET PAINT -->
+        <div class="marquee" aria-hidden="true">
+            <div class="marquee__track">
+                <span class="marquee__item">CRISSIEL <span class="sep">//</span> MODA ÚNICA <span class="sep light">//</span> ENVÍOS A TODO EL PERÚ <span class="sep tri">▸</span> PIDE POR WHATSAPP <span class="sep light">//</span> NUEVAS COLECCIONES <span class="sep tri">▸</span> ESTILO QUE TE REPRESENTA <span class="sep light">//</span></span>
+                <span class="marquee__item">CRISSIEL <span class="sep">//</span> MODA ÚNICA <span class="sep light">//</span> ENVÍOS A TODO EL PERÚ <span class="sep tri">▸</span> PIDE POR WHATSAPP <span class="sep light">//</span> NUEVAS COLECCIONES <span class="sep tri">▸</span> ESTILO QUE TE REPRESENTA <span class="sep light">//</span></span>
+            </div>
+        </div>
 
         <h2 class="section-title" id="productos">
             <i class="fas fa-bolt"></i> Productos destacados
@@ -548,7 +755,7 @@
             <button class="filter-btn" data-filter="perfumes-hombre">Perfumes Hombre</button>
             <button class="filter-btn" data-filter="perfumes-mujer">Perfumes Mujer</button>
             <button class="filter-btn" data-filter="joyeria">Joyería</button>
-            <button class="filter-btn" data-filter="zapatillas">Zapatillas</button>
+            <button class="filter-btn" data-filter="zapatillas">Calzado</button>
         </div>
 
         <div class="products-grid" id="productsGrid"></div>
@@ -615,7 +822,7 @@
 
     <div class="toast" id="toast"></div>
 
-    <!-- ✅ LIGHTBOX (NUEVO) - Visor de imágenes ampliadas -->
+    <!-- LIGHTBOX -->
     <div class="lightbox" id="lightbox">
         <button class="lightbox__close" id="lightboxClose" aria-label="Cerrar">&times;</button>
         <img src="" alt="" class="lightbox__img" id="lightboxImg">
@@ -629,20 +836,18 @@
     <!-- JAVASCRIPT -->
     <script>
     (function() {
-        // =========================================================
-        // ⚙️ CONFIGURACIÓN
-        // =========================================================
         const WHATSAPP_NUMBER = '51965417107';
         const NOMBRE_TIENDA = 'Crissiel';
 
-        // =========================================================
-        // CATÁLOGO DE PRODUCTOS
-        // Rutas EXACTAS de los archivos (con tildes, mayúsculas,
-        // comas, paréntesis, etc.). Título y descripción corregidos.
-        // =========================================================
         const products = [
             // ================= PERFUMES HOMBRE =================
             { id: 1, title: 'Perfume Royal Diadem By V.V Love', desc: 'Dulce, cálido, avainillado', price: 30.00, image: 'imagenes/perfumehom_30soles_01.webp', category: 'perfumes-hombre' },
+            { id: 161, title: 'Perfume Indian Collection ABT352', desc: 'Fragancia masculina Indian Collection', price: 40.00, image: 'imagenes/perfumeshombre_40soles_IndianCollectionABT352.jpg', category: 'perfumes-hombre' },
+            { id: 162, title: 'Perfume Indian Collection CLHN241', desc: 'Fragancia masculina Indian Collection', price: 40.00, image: 'imagenes/perfumeshombre_40soles_IndianCollectionCLHN241.jpg', category: 'perfumes-hombre' },
+            { id: 163, title: 'Perfume Indian Collection EZF347', desc: 'Fragancia masculina Indian Collection', price: 40.00, image: 'imagenes/perfumeshombre_40soles_IndianCollectionEZF347.jpg', category: 'perfumes-hombre' },
+            { id: 164, title: 'Perfume Indian Collection IPR209', desc: 'Fragancia masculina Indian Collection', price: 45.00, image: 'imagenes/perfumeshombre_45soles_IndianCollectionIPR209.jpg', category: 'perfumes-hombre' },
+            { id: 165, title: 'Perfume Indian Collection PBL244', desc: 'Fragancia masculina Indian Collection', price: 45.00, image: 'imagenes/perfumeshombre_45soles_IndianCollectionPBL244.jpg', category: 'perfumes-hombre' },
+            { id: 166, title: 'Perfume Indian Collection X60', desc: 'Fragancia masculina Indian Collection', price: 45.00, image: 'imagenes/perfumeshombre_45soles_IndianCollectionX60.png', category: 'perfumes-hombre' },
 
             // ================= PERFUMES MUJER =================
             { id: 2, title: 'Eau de Toilette MISSY G.G. 100 ml – V.V.LOVE', desc: 'Fragancia femenina, elegante y fresca', price: 25.00, image: 'imagenes/perfumemuj_25soles_02.jpg', category: 'perfumes-mujer' },
@@ -653,6 +858,8 @@
             { id: 7, title: 'Perfume Para Mujer Indian Collection 100 ml. Marc Jacobs', desc: 'Inspirado en Marc Jacobs, floral y elegante', price: 25.00, image: 'imagenes/perfumemuj_25soles_01.png', category: 'perfumes-mujer' },
             { id: 8, title: 'Rose & Lin Collection Lovali Fragrances de 250 ml', desc: 'Aroma floral y fresco, 250 ml', price: 15.00, image: 'imagenes/perfumemuj_15soles_02.jpg', category: 'perfumes-mujer' },
             { id: 9, title: 'Body Splash Refreshing Sweet de V.V. Aroma Corporal', desc: 'Body splash refrescante y dulce', price: 15.00, image: 'imagenes/perfumemuj_15soles_01.jpg', category: 'perfumes-mujer' },
+            { id: 167, title: 'Perfume Indian Collection JLB188', desc: 'Fragancia femenina Indian Collection', price: 30.00, image: 'imagenes/perfumemujer_30soles_IndianCollectionJLB188.jpg', category: 'perfumes-mujer' },
+            { id: 168, title: 'Perfume Indian Collection JPS23', desc: 'Fragancia femenina Indian Collection', price: 30.00, image: 'imagenes/perfumemujer_30soles_IndianCollectionJPS23.jpg', category: 'perfumes-mujer' },
 
             // ================= ROPA DE HOMBRE =================
             { id: 10, title: 'Polo Camisero color blanco', desc: 'Polo camisero clásico, color blanco', price: 25.00, image: 'imagenes/ropahombre_25soles_01.jpg', category: 'hombre' },
@@ -670,11 +877,17 @@
             { id: 22, title: 'Polo diseño aesthetic color rojo', desc: 'Polo diseño aesthetic color rojo', price: 30.00, image: 'imagenes/ropahombre_30soles_polo_diseñoaesthetic_color_rojo.jpg', category: 'hombre' },
             { id: 23, title: 'Polo Dolce & Gabbana blanco', desc: 'Polo Dolce & Gabbana blanco', price: 30.00, image: 'imagenes/ropahombre_30soles_polo_dolcegabana_blanco.jpg', category: 'hombre' },
             { id: 24, title: 'Polo Dolce & Gabbana color beige', desc: 'Polo Dolce & Gabbana color beige', price: 30.00, image: 'imagenes/ropahombre_30soles_polo_dolcegabana_color_beige.jpg', category: 'hombre' },
-            { id: 25, title: 'Pantalón cargo color verde', desc: 'Pantalón cargo color verde', price: 75.00, image: 'imagenes/ropahombre_40soles_pantalon_cargo_colorverde.jpg', category: 'hombre' },
-            { id: 26, title: 'Pantalón jean', desc: 'Pantalón jean clásico', price: 75.00, image: 'imagenes/ropahombre_40soles_pantalon_jean.jpg', category: 'hombre' },
+            { id: 25, title: 'Pantalón cargo color verde', desc: 'Pantalón cargo color verde', price: 40.00, image: 'imagenes/ropahombre_40soles_pantalon_cargo_colorverde.jpg', category: 'hombre' },
+            { id: 26, title: 'Pantalón jean', desc: 'Pantalón jean clásico', price: 40.00, image: 'imagenes/ropahombre_40soles_pantalon_jean.jpg', category: 'hombre' },
             { id: 27, title: 'Polera Mickey Mouse de Los Eagle color gris', desc: 'Polera Mickey Mouse de Los Eagle color gris', price: 45.00, image: 'imagenes/ropahombre_45soles_polera_mickeymousedeloseagle_colorgris.png', category: 'hombre' },
             { id: 28, title: 'Polera Mickey Mouse de Los Eagle color gris y negro', desc: 'Polera Mickey Mouse de Los Eagle color gris y negro', price: 45.00, image: 'imagenes/ropahombre_45soles_polera_mickeymousedeloseagle_colorgrisynegro.png', category: 'hombre' },
             { id: 29, title: 'Polera Mickey Mouse de Los Eagle color gris y verde', desc: 'Polera Mickey Mouse de Los Eagle color gris y verde', price: 45.00, image: 'imagenes/ropahombre_45soles_polera_mickeymousedeloseagle_colorgrisyverde.png', category: 'hombre' },
+            { id: 169, title: 'Polo Hugo color rojo', desc: 'Polo Hugo color rojo', price: 30.00, image: 'imagenes/ropahombre_30soles_poloHugocolorrojo.png', category: 'hombre' },
+            { id: 170, title: 'Polo diseño aesthetic color blanco', desc: 'Polo diseño aesthetic color blanco', price: 35.00, image: 'imagenes/ropahombre_35soles_polodiseñoaestheticcolorblanco.png', category: 'hombre' },
+            { id: 171, title: 'Polo diseño de Biggie color beige', desc: 'Polo diseño de Biggie color beige', price: 35.00, image: 'imagenes/ropahombre_35soles_polodiseñodebiggiecolorbeige.png', category: 'hombre' },
+            { id: 172, title: 'Polo diseño de Biggie color rojo', desc: 'Polo diseño de Biggie color rojo', price: 35.00, image: 'imagenes/ropahombre_35soles_polodiseñodebiggiecolorrojo.png', category: 'hombre' },
+            { id: 173, title: 'Buzo color azul marino', desc: 'Buzo color azul marino', price: 40.00, image: 'imagenes/ropahombre_40soles_buzocolorazulmarino.png', category: 'hombre' },
+            { id: 174, title: 'Buzo color negro', desc: 'Buzo color negro', price: 40.00, image: 'imagenes/ropahombre_40soles_buzocolornegro.png', category: 'hombre' },
 
             // ================= POLERAS =================
             { id: 30, title: 'Polera color azul marino', desc: 'Polera básica color azul marino', price: 50.00, image: 'imagenes/polera_50soles_02.png', category: 'mujer' },
@@ -696,7 +909,7 @@
             { id: 44, title: 'Conjunto de pijama color rosado perleado', desc: 'Conjunto color rosado perleado', price: 25.00, image: 'imagenes/pijama_25soles_06.png', category: 'pijamas' },
             { id: 45, title: 'Conjunto de pijama color dorado', desc: 'Conjunto color dorado', price: 25.00, image: 'imagenes/pijama_25soles_01.png', category: 'pijamas' },
 
-            // ================= ROPA DE MUJER (existentes) =================
+            // ================= ROPA DE MUJER =================
             { id: 46, title: 'Polo color rosado con diseño de Mickey', desc: 'Diseño de Mickey, color rosado', price: 25.00, image: 'imagenes/ropa_25soles_01.jpg', category: 'mujer' },
             { id: 47, title: 'Polo color negro con diseño de Hello Kitty', desc: 'Diseño de Hello Kitty, color negro', price: 25.00, image: 'imagenes/ropa_25soles_02.jpg', category: 'mujer' },
             { id: 48, title: 'Polo color blanco con diseño de cerezas', desc: 'Diseño de cerezas, color blanco', price: 15.00, image: 'imagenes/ropa_15soles_01.jpg', category: 'mujer' },
@@ -719,8 +932,6 @@
             { id: 65, title: 'Polo color negro con diseño de Minnie', desc: 'Diseño de Minnie, color negro', price: 20.00, image: 'imagenes/ropa_20soles_01.jpg', category: 'mujer' },
             { id: 66, title: 'Polo color azul con diseño de cereza', desc: 'Diseño de cereza, color azul', price: 20.00, image: 'imagenes/ropa_20soles_02.png', category: 'mujer' },
             { id: 67, title: 'Polo color azul con diseño de rosas', desc: 'Diseño de rosas, color azul', price: 20.00, image: 'imagenes/ropa_20soles_03.png', category: 'mujer' },
-
-            // ================= ROPA DE MUJER (nuevas - prefijo ropamujer_) =================
             { id: 68, title: 'Polo manga larga color celeste', desc: 'Polo manga larga color celeste', price: 10.00, image: 'imagenes/ropamujer_10soles_polomangalarga_colorceleste.jpg', category: 'mujer' },
             { id: 69, title: 'Polo manga larga color naranja', desc: 'Polo manga larga color naranja', price: 10.00, image: 'imagenes/ropamujer_10soles_polomangalarga_colornaranja.jpg', category: 'mujer' },
             { id: 70, title: 'Polo manga larga color rojo', desc: 'Polo manga larga color rojo', price: 10.00, image: 'imagenes/ropamujer_10soles_polomangalarga_colorrojo.jpg', category: 'mujer' },
@@ -753,8 +964,11 @@
             { id: 97, title: 'Short jean', desc: 'Short jean', price: 28.00, image: 'imagenes/ropamujer_28soles_short_jean.jpg', category: 'mujer' },
             { id: 98, title: 'Vestido color blanco y negro', desc: 'Vestido color blanco y negro', price: 30.00, image: 'imagenes/ropamujer_30soles_vestido_colorblancoynegro.jpg', category: 'mujer' },
             { id: 99, title: 'Vestido color blanco y rojo', desc: 'Vestido color blanco y rojo', price: 30.00, image: 'imagenes/ropamujer_30soles_vestido_colorblancoyrojo.jpg', category: 'mujer' },
+            { id: 175, title: 'Minifalda cargo jean', desc: 'Minifalda cargo jean', price: 40.00, image: 'imagenes/ropamujer_40soles_minifaldacargojean.png', category: 'mujer' },
+            { id: 176, title: 'Pantalón cargo color hielo', desc: 'Pantalón cargo color hielo', price: 40.00, image: 'imagenes/ropamujer_40soles_pantaloncargocolorhielo.png', category: 'mujer' },
+            { id: 177, title: 'Vestido negro con apertura en la pierna', desc: 'Vestido negro con apertura en la pierna', price: 20.00, image: 'imagenes/ropamujer_20soles_vestidonegroconaperturaenlapierna.jpg', category: 'mujer' },
 
-            // ================= ZAPATILLAS =================
+            // ================= ZAPATILLAS / CALZADO =================
             { id: 100, title: 'Zapatillas de hombre FASHION talla 40 color negro', desc: 'Zapatillas de hombre FASHION talla 40 color negro', price: 50.00, image: 'imagenes/zapatillas_50soles_zapatillasdehombreFASHION_talla40_colornegro.jpg', category: 'zapatillas' },
             { id: 101, title: 'Zapatillas de hombre FASHION talla 42 color blanco', desc: 'Zapatillas de hombre FASHION talla 42 color blanco', price: 50.00, image: 'imagenes/zapatillas_50soles_zapatillasdehombreFASHION_talla42_colorblanco.jpg', category: 'zapatillas' },
             { id: 102, title: 'Zapatilla de mujer New Cacy talla 37 color negro', desc: 'Zapatilla de mujer New Cacy talla 37 color negro', price: 80.00, image: 'imagenes/zapatillas_80soles_zapatillademujernewcacy_talla37_colornegro.png', category: 'zapatillas' },
@@ -764,6 +978,8 @@
             { id: 106, title: 'Zapatillas de hombre DDARIEMS talla 39 color blanco', desc: 'Zapatillas de hombre DDARIEMS talla 39 color blanco', price: 140.00, image: 'imagenes/zapatillas_140soles_zapatillasdehombreDDARIEMS_talla39_colorblanco.jpg', category: 'zapatillas' },
             { id: 107, title: 'Zapatillas de hombre DDARIEMS talla 41 color blanco', desc: 'Zapatillas de hombre DDARIEMS talla 41 color blanco', price: 140.00, image: 'imagenes/zapatillas_140soles_zapatillasdehombreDDARIEMS_talla41_colorblanco.png', category: 'zapatillas' },
             { id: 108, title: 'Zapatillas unisex IRUN talla 39 color blanco', desc: 'Zapatillas unisex IRUN talla 39 color blanco', price: 160.00, image: 'imagenes/zapatillas_160soles_zapatillasunisex_IRUN_talla39_colorblanco.png', category: 'zapatillas' },
+            { id: 178, title: 'Sandalias con diseño de flor color beige', desc: 'Sandalias con diseño de flor color beige', price: 10.00, image: 'imagenes/calzado_10soles_sandaliascondiseñodeflorcolorbeige.png', category: 'zapatillas' },
+            { id: 179, title: 'Sandalias con diseño de flor color blanco', desc: 'Sandalias con diseño de flor color blanco', price: 10.00, image: 'imagenes/calzado_10soles_sandaliascondiseñodeflorcolorblanco.png', category: 'zapatillas' },
 
             // ================= JOYERÍA =================
             { id: 109, title: 'Pulsera color celeste', desc: 'Pulsera color celeste', price: 6.00, image: 'imagenes/joyeria_6soles_pulsera_colorceleste.jpg', category: 'joyeria' },
@@ -816,17 +1032,21 @@
             { id: 156, title: 'Cadena diseño de flor dorado', desc: 'Cadena diseño de flor dorado', price: 28.00, image: 'imagenes/joyeria_28soles_cadena_diseñodeflor_dorado.jpg', category: 'joyeria' },
             { id: 157, title: 'Cadena diseño de manzana dorado', desc: 'Cadena diseño de manzana dorado', price: 28.00, image: 'imagenes/joyeria_28soles_cadena_diseñodemanzana_dorado.jpg', category: 'joyeria' },
             { id: 158, title: 'Cadena diseño estrella dorado', desc: 'Cadena diseño estrella dorado', price: 28.00, image: 'imagenes/joyeria_28soles_cadena_diseñoestrella_dorado.jpg', category: 'joyeria' },
-            { id: 160, title: 'Reloj Hello Kitty', desc: 'Reloj Hello Kitty', price: 40.00, image: 'imagenes/joyeria_40soles_reloj_hellokitty.jpg', category: 'joyeria' }
+            { id: 159, title: 'Reloj Cinnamoroll', desc: 'Reloj Cinnamoroll', price: 40.00, image: 'imagenes/joyeria_40soles_reloj_cinnamoroll.jpg', category: 'joyeria', soldOut: true },
+            { id: 160, title: 'Reloj Hello Kitty', desc: 'Reloj Hello Kitty', price: 40.00, image: 'imagenes/joyeria_40soles_reloj_hellokitty.jpg', category: 'joyeria' },
+            { id: 180, title: 'Pulsera de metal con dije de corazón', desc: 'Pulsera de metal con dije de corazón', price: 13.00, image: 'imagenes/joyeria_13soles_pulserademetalcondijedecorazon.png', category: 'joyeria' },
+            { id: 181, title: 'Pulsera de metal con dije de corazón con la letra A', desc: 'Pulsera de metal con dije de corazón con la letra A', price: 13.00, image: 'imagenes/joyeria_13soles_pulserademetalcondijedecorazonconlaletraA.png', category: 'joyeria' },
+            { id: 182, title: 'Pulsera de metal con dije de estrella', desc: 'Pulsera de metal con dije de estrella', price: 13.00, image: 'imagenes/joyeria_13soles_pulserademetalcondijedeestrella.png', category: 'joyeria' },
+            { id: 183, title: 'Pulsera de metal con dije de lazo', desc: 'Pulsera de metal con dije de lazo', price: 13.00, image: 'imagenes/joyeria_13soles_pulserademetalcondijedelazo.png', category: 'joyeria' },
+            { id: 184, title: 'Pulsera de metal con dije de mariposa', desc: 'Pulsera de metal con dije de mariposa', price: 13.00, image: 'imagenes/joyeria_13soles_pulserademetalcondijedemariposa.png', category: 'joyeria' },
+            { id: 185, title: 'Pulsera de metal con dijes de mariposas', desc: 'Pulsera de metal con dijes de mariposas', price: 13.00, image: 'imagenes/joyeria_13soles_pulserademetalcondijedemariposas.png', category: 'joyeria' },
+            { id: 186, title: 'Reloj diseño de Hello Kitty color dorado', desc: 'Reloj diseño de Hello Kitty color dorado', price: 40.00, image: 'imagenes/joyeria_40soles_relojdiseñodehellokittycolordorado.png', category: 'joyeria' },
+            { id: 187, title: 'Reloj diseño de Kuromi color dorado', desc: 'Reloj diseño de Kuromi color dorado', price: 40.00, image: 'imagenes/joyeria_40soles_relojdiseñodekuromicolordorado.png', category: 'joyeria' },
+            { id: 188, title: 'Reloj diseño de Melody color dorado', desc: 'Reloj diseño de Melody color dorado', price: 40.00, image: 'imagenes/joyeria_40soles_relojdiseñodemelodycolordorado.png', category: 'joyeria' }
         ];
 
-        // =========================================================
-        // ESTADO DEL CARRITO
-        // =========================================================
         let cart = [];
 
-        // =========================================================
-        // REFERENCIAS AL DOM
-        // =========================================================
         const productsGrid = document.getElementById('productsGrid');
         const cartPanel = document.getElementById('cartPanel');
         const cartIcon = document.getElementById('cartIcon');
@@ -838,7 +1058,6 @@
         const checkoutBtn = document.getElementById('checkoutBtn');
         const toast = document.getElementById('toast');
 
-        // ✅ Lightbox - referencias
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightboxImg');
         const lightboxClose = document.getElementById('lightboxClose');
@@ -846,9 +1065,6 @@
         const lightboxCategory = document.getElementById('lightboxCategory');
         const lightboxPrice = document.getElementById('lightboxPrice');
 
-        // =========================================================
-        // RENDERIZAR PRODUCTOS
-        // =========================================================
         function renderProducts(filter = 'all') {
             const filtered = filter === 'all'
                 ? products
@@ -859,8 +1075,11 @@
                 return;
             }
 
-            productsGrid.innerHTML = filtered.map(product => `
-                <div class="product-card" data-category="${product.category}">
+            productsGrid.innerHTML = filtered.map(product => {
+                const isSoldOut = product.soldOut === true;
+                return `
+                <div class="product-card ${isSoldOut ? 'sold-out' : ''}" data-category="${product.category}">
+                    ${isSoldOut ? '<span class="sold-out-badge">AGOTADO</span>' : ''}
                     <div class="product-image-container" data-id="${product.id}" title="Clic para ampliar">
                         <img src="${product.image}" alt="${product.title}" class="product-img" loading="lazy"
                              onerror="this.onerror=null;this.src='https://via.placeholder.com/300x300/1a1a1a/8b5cf6?text=Crissiel';">
@@ -870,22 +1089,26 @@
                         <h3 class="product-title">${product.title}</h3>
                         <p class="product-desc">${product.desc}</p>
                         <span class="product-price">S/ ${product.price.toFixed(2)}</span>
-                        <button class="add-to-cart-btn" data-id="${product.id}">
-                            <i class="fas fa-cart-plus"></i> Añadir al carrito
-                        </button>
+                        ${isSoldOut 
+                            ? `<button class="add-to-cart-btn sold-out-btn" disabled>
+                                <i class="fas fa-ban"></i> Producto agotado
+                               </button>`
+                            : `<button class="add-to-cart-btn" data-id="${product.id}">
+                                <i class="fas fa-cart-plus"></i> Añadir al carrito
+                               </button>`
+                        }
                     </div>
                 </div>
-            `).join('');
+                `;
+            }).join('');
 
-            // Eventos para añadir al carrito
-            document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+            document.querySelectorAll('.add-to-cart-btn:not(.sold-out-btn)').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     e.stopPropagation();
                     addToCart(Number(btn.dataset.id));
                 });
             });
 
-            // ✅ NUEVO: Eventos para abrir el lightbox al hacer clic en la imagen
             document.querySelectorAll('.product-image-container').forEach(container => {
                 container.addEventListener('click', () => {
                     const id = Number(container.dataset.id);
@@ -902,14 +1125,11 @@
                 'perfumes-hombre': 'Perfume Hombre',
                 'perfumes-mujer': 'Perfume Mujer',
                 'joyeria': 'Joyería',
-                'zapatillas': 'Zapatillas'
+                'zapatillas': 'Calzado'
             };
             return names[cat] || cat;
         }
 
-        // =========================================================
-        // ✅ LIGHTBOX - Abrir / Cerrar
-        // =========================================================
         function openLightbox(productId) {
             const product = products.find(p => p.id === productId);
             if (!product) return;
@@ -918,38 +1138,42 @@
             lightboxImg.alt = product.title;
             lightboxTitle.textContent = product.title;
             lightboxCategory.textContent = getCategoryName(product.category);
-            lightboxPrice.textContent = `S/ ${product.price.toFixed(2)}`;
+
+            if (product.soldOut === true) {
+                lightboxPrice.textContent = 'AGOTADO';
+                lightboxPrice.classList.add('sold-out');
+            } else {
+                lightboxPrice.textContent = `S/ ${product.price.toFixed(2)}`;
+                lightboxPrice.classList.remove('sold-out');
+            }
 
             lightbox.classList.add('active');
-            document.body.style.overflow = 'hidden'; // Bloquear scroll de fondo
+            document.body.style.overflow = 'hidden';
         }
 
         function closeLightbox() {
             lightbox.classList.remove('active');
-            document.body.style.overflow = ''; // Devolver scroll
+            document.body.style.overflow = '';
         }
 
-        // Cerrar con botón ✕
         lightboxClose.addEventListener('click', closeLightbox);
-
-        // Cerrar al hacer clic fuera de la imagen
         lightbox.addEventListener('click', (e) => {
             if (e.target === lightbox) closeLightbox();
         });
-
-        // Cerrar con tecla ESC
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && lightbox.classList.contains('active')) {
                 closeLightbox();
             }
         });
 
-        // =========================================================
-        // AÑADIR AL CARRITO
-        // =========================================================
         function addToCart(productId) {
             const product = products.find(p => p.id === productId);
             if (!product) return;
+
+            if (product.soldOut === true) {
+                showToast('❌ Producto agotado');
+                return;
+            }
 
             const existingItem = cart.find(item => item.id === productId);
             if (existingItem) {
@@ -967,9 +1191,6 @@
             showToast(`✔ ${product.title} añadido`);
         }
 
-        // =========================================================
-        // ACTUALIZAR INTERFAZ DEL CARRITO
-        // =========================================================
         function updateCartUI() {
             const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
             cartCount.textContent = totalItems;
@@ -1018,9 +1239,6 @@
             updateCartUI();
         }
 
-        // =========================================================
-        // NOTIFICACIÓN TOAST
-        // =========================================================
         let toastTimeout;
         function showToast(message) {
             toast.textContent = message;
@@ -1029,9 +1247,6 @@
             toastTimeout = setTimeout(() => toast.classList.remove('show'), 2500);
         }
 
-        // =========================================================
-        // ABRIR / CERRAR CARRITO
-        // =========================================================
         function openCart() {
             cartPanel.classList.add('open');
             overlay.classList.add('active');
@@ -1048,9 +1263,6 @@
             if (e.key === 'Escape' && cartPanel.classList.contains('open')) closeCart();
         });
 
-        // =========================================================
-        // CHECKOUT POR WHATSAPP
-        // =========================================================
         checkoutBtn.addEventListener('click', () => {
             if (cart.length === 0) {
                 showToast('🛒 El carrito está vacío');
@@ -1080,9 +1292,6 @@
             showToast('📲 Abriendo WhatsApp con tu pedido...');
         });
 
-        // =========================================================
-        // FILTROS POR CATEGORÍA
-        // =========================================================
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -1091,9 +1300,6 @@
             });
         });
 
-        // =========================================================
-        // INICIALIZAR
-        // =========================================================
         renderProducts('all');
         updateCartUI();
     })();
