@@ -174,14 +174,14 @@
             display: flex;
             align-items: center;
         }
-        /* Capa de HUMO: misma imagen con blur grande, baja opacidad
-           y máscara radial para que se desvanezca por completo */
-        .hero__smoke {
+        /* Capa de HUMO */
+         .hero__smoke {
             position: absolute;
             inset: 0;
             background-image: url('imagenes/barnner1.png');
             background-size: contain;
-            background-position: right center;
+            /* Movemos el banner un poco a la izquierda para liberar la derecha */
+            background-position: 85% center; 
             background-repeat: no-repeat;
             z-index: 0;
             filter: blur(45px) saturate(1.1);
@@ -201,13 +201,14 @@
                 transparent 100%
             );
         }
-        /* Capa NÍTIDA: la imagen real encima, sin blur, con máscara radial suave */
+        /* Capa NÍTIDA */
         .hero__image {
             position: absolute;
             inset: 0;
             background-image: url('imagenes/barnner1.png');
             background-size: contain;
-            background-position: right center;
+            /* Movemos el banner un poco a la izquierda para liberar la derecha */
+            background-position: 85% center; 
             background-repeat: no-repeat;
             z-index: 1;
             -webkit-mask-image: radial-gradient(
@@ -249,6 +250,32 @@
             font-weight: 600; font-size: 1rem;
             box-shadow: 0 8px 18px rgba(139,92,246,0.3);
             margin-top: 16px; display: inline-block;
+        }
+
+        /* ===================================================== */
+        /* ✅ ESPÍRITU FLOTANTE - EN LA ESQUINA DERECHA         */
+        /* ===================================================== */
+        .espiritu-flotante {
+            position: absolute;
+            right: 1%; /* Pegado a la esquina derecha */
+            bottom: -15px; /* Un poco más abajo para que descanse en el borde */
+            width: 260px; /* Aumentado un poquito más */
+            z-index: 4;
+            pointer-events: none;
+            animation: levitarEspiritu 6s ease-in-out infinite, aparecerEspiritu 1.5s ease-out;
+            
+            /* Sombra suave en la base para simular que flota sobre el banner */
+            filter: drop-shadow(0px 15px 10px rgba(0,0,0,0.8));
+        }
+
+        @keyframes levitarEspiritu {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(-1deg); }
+        }
+
+        @keyframes aparecerEspiritu {
+            0% { opacity: 0; transform: scale(0.8) translateY(30px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
         }
 
         .section-title {
@@ -641,7 +668,7 @@
             .logo-animated-img { height: 45px; }
             .nav__links { display: none; }
             .cart-icon { width: 44px; height: 44px; font-size: 1.3rem; }
-            .hero { min-height: 260px; }
+            .hero { min-height: 320px; padding-bottom: 80px; } /* Aumentado para dar espacio abajo */
             .hero__content { padding: 28px 20px; text-align: center; max-width: 100%; }
             .hero h1 { font-size: 1.5rem; margin: 0 auto; }
             .hero p { font-size: 0.9rem; margin: 8px auto 0; }
@@ -656,6 +683,17 @@
                 -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, #000 0%, #000 50%, rgba(0,0,0,0.7) 75%, transparent 100%);
                 mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, #000 0%, #000 50%, rgba(0,0,0,0.7) 75%, transparent 100%);
             }
+            
+            /* Ajuste del espíritu en móvil: Centrado debajo del botón */
+            .espiritu-flotante {
+                width: 140px;
+                left: 50%;
+                right: auto;
+                bottom: -15px;
+                transform: translateX(-50%);
+                animation: levitarEspirituMobile 6s ease-in-out infinite, aparecerEspiritu 1.5s ease-out;
+            }
+            
             .section-title { font-size: 1.5rem; }
             .products-grid {
                 grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
@@ -693,9 +731,16 @@
             .lightbox__title { font-size: 1.05rem; }
             .lightbox__price { font-size: 1.2rem; }
         }
+        
+        @keyframes levitarEspirituMobile {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-10px); }
+        }
+
         @media (max-width: 400px) {
             .products-grid { grid-template-columns: 1fr; }
             .hero h1 { font-size: 1.3rem; }
+            .espiritu-flotante { width: 120px; bottom: -10px; }
         }
     </style>
 </head>
@@ -724,10 +769,14 @@
 
     <!-- MAIN -->
     <main class="main">
-        <!-- HERO / INICIO - BANNER CON EFECTO HUMO DE DOBLE CAPA -->
+        <!-- HERO / INICIO -->
         <section class="hero" id="inicio">
             <div class="hero__smoke"></div>
             <div class="hero__image"></div>
+            
+            <!-- ✅ ESPÍRITU FLOTANTE -->
+            <img src="imagenes/espiritu1.png" alt="Espíritu Crissiel" class="espiritu-flotante">
+            
             <div class="hero__content">
                 <h1>Descubre nuestra colección y variedad</h1>
                 <p>Prendas exclusivas, street style y la esencia de Crissiel.</p>
@@ -735,7 +784,7 @@
             </div>
         </section>
 
-        <!-- ✅ FRANJA MOVIBLE - RUBIK WET PAINT -->
+        <!-- ✅ FRANJA MOVIBLE -->
         <div class="marquee" aria-hidden="true">
             <div class="marquee__track">
                 <span class="marquee__item">CRISSIEL <span class="sep">//</span> MODA ÚNICA <span class="sep light">//</span> ENVÍOS A TODO EL PERÚ <span class="sep tri">▸</span> PIDE POR WHATSAPP <span class="sep light">//</span> NUEVAS COLECCIONES <span class="sep tri">▸</span> ESTILO QUE TE REPRESENTA <span class="sep light">//</span></span>
@@ -766,15 +815,15 @@
             <p>Síguenos en nuestras redes sociales o escríbenos directamente por WhatsApp para cualquier consulta, pedido o colaboración.</p>
 
             <div class="social-grid">
-                <a href="https://www.tiktok.com/@crissiel_cl?is_from_webapp=1&sender_device=pc" target="_blank" rel="noopener" class="social-card">
-                    <i class="fab fa-tiktok icon-tiktok"></i>
-                    <span>TikTok Principal</span>
-                    <small>@crissiel_cl</small>
-                </a>
                 <a href="https://www.tiktok.com/@crissiel_cl2?is_from_webapp=1&sender_device=pc" target="_blank" rel="noopener" class="social-card">
                     <i class="fab fa-tiktok icon-tiktok"></i>
-                    <span>TikTok Secundaria</span>
+                    <span>TikTok Principal</span>
                     <small>@crissiel_cl2</small>
+                </a>
+                <a href="https://www.tiktok.com/@crissiel_cl54?is_from_webapp=1&sender_device=pc" target="_blank" rel="noopener" class="social-card">
+                    <i class="fab fa-tiktok icon-tiktok"></i>
+                    <span>TikTok Secundaria</span>
+                    <small>@crissiel_cl54</small>
                 </a>
                 <a href="https://wa.me/51965417107" target="_blank" rel="noopener" class="social-card">
                     <i class="fab fa-whatsapp icon-wsp"></i>
