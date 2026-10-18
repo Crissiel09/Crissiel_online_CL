@@ -180,7 +180,6 @@
             inset: 0;
             background-image: url('imagenes/barnner1.png');
             background-size: contain;
-            /* Movemos el banner un poco a la izquierda para liberar la derecha */
             background-position: 85% center; 
             background-repeat: no-repeat;
             z-index: 0;
@@ -207,7 +206,6 @@
             inset: 0;
             background-image: url('imagenes/barnner1.png');
             background-size: contain;
-            /* Movemos el banner un poco a la izquierda para liberar la derecha */
             background-position: 85% center; 
             background-repeat: no-repeat;
             z-index: 1;
@@ -253,24 +251,24 @@
         }
 
         /* ===================================================== */
-        /* ✅ ESPÍRITU FLOTANTE - EN LA ESQUINA DERECHA         */
+        /* ✅ ESPÍRITU FLOTANTE - AJUSTADO Y CENTRADO          */
         /* ===================================================== */
         .espiritu-flotante {
             position: absolute;
-            right: 1%; /* Pegado a la esquina derecha */
-            bottom: -15px; /* Un poco más abajo para que descanse en el borde */
-            width: 260px; /* Aumentado un poquito más */
+            right: 1%; /* Lo devolvemos a la derecha para que no tape la palabra CRISSIEL */
+            bottom: 0px; /* Pegado al borde inferior para que los pies descansen */
+            width: 190px; /* Reducido un poquito más para que la cabeza no se salga */
             z-index: 4;
             pointer-events: none;
             animation: levitarEspiritu 6s ease-in-out infinite, aparecerEspiritu 1.5s ease-out;
             
             /* Sombra suave en la base para simular que flota sobre el banner */
-            filter: drop-shadow(0px 15px 10px rgba(0,0,0,0.8));
+            filter: drop-shadow(0px 10px 8px rgba(0,0,0,0.9));
         }
 
         @keyframes levitarEspiritu {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-12px) rotate(-1deg); }
+            0%, 100% { transform: translateY(0); } /* Sin rotación para que se vea más natural */
+            50% { transform: translateY(-6px); } /* Flotación más sutil */
         }
 
         @keyframes aparecerEspiritu {
@@ -668,30 +666,47 @@
             .logo-animated-img { height: 45px; }
             .nav__links { display: none; }
             .cart-icon { width: 44px; height: 44px; font-size: 1.3rem; }
-            .hero { min-height: 320px; padding-bottom: 80px; } /* Aumentado para dar espacio abajo */
-            .hero__content { padding: 28px 20px; text-align: center; max-width: 100%; }
+            
+            /* Ajuste del Hero en móvil */
+            .hero { 
+                min-height: 380px; 
+                padding-bottom: 100px; 
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+            }
+            .hero__content { 
+                padding: 28px 20px 0; 
+                text-align: center; 
+                max-width: 100%; 
+                z-index: 10;
+            }
             .hero h1 { font-size: 1.5rem; margin: 0 auto; }
             .hero p { font-size: 0.9rem; margin: 8px auto 0; }
+            .hero .badge { margin-top: 12px; }
+            
             .hero__smoke, .hero__image {
-                background-position: center;
+                background-position: center top; 
+                background-size: 120%; 
             }
             .hero__smoke {
-                -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, #000 0%, #000 35%, rgba(0,0,0,0.6) 65%, transparent 100%);
-                mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, #000 0%, #000 35%, rgba(0,0,0,0.6) 65%, transparent 100%);
+                -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, #000 0%, #000 35%, rgba(0,0,0,0.6) 65%, transparent 100%);
+                mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, #000 0%, #000 35%, rgba(0,0,0,0.6) 65%, transparent 100%);
             }
             .hero__image {
-                -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, #000 0%, #000 50%, rgba(0,0,0,0.7) 75%, transparent 100%);
-                mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, #000 0%, #000 50%, rgba(0,0,0,0.7) 75%, transparent 100%);
+                -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, #000 0%, #000 50%, rgba(0,0,0,0.7) 75%, transparent 100%);
+                mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, #000 0%, #000 50%, rgba(0,0,0,0.7) 75%, transparent 100%);
             }
             
-            /* Ajuste del espíritu en móvil: Centrado debajo del botón */
+            /* ✅ Ajuste del espíritu en móvil: Centrado debajo del botón */
             .espiritu-flotante {
-                width: 140px;
+                width: 130px; 
                 left: 50%;
                 right: auto;
-                bottom: -15px;
+                bottom: 5px; 
                 transform: translateX(-50%);
                 animation: levitarEspirituMobile 6s ease-in-out infinite, aparecerEspiritu 1.5s ease-out;
+                z-index: 5; 
             }
             
             .section-title { font-size: 1.5rem; }
@@ -734,13 +749,14 @@
         
         @keyframes levitarEspirituMobile {
             0%, 100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(-10px); }
+            50% { transform: translateX(-50%) translateY(-6px); }
         }
 
         @media (max-width: 400px) {
             .products-grid { grid-template-columns: 1fr; }
             .hero h1 { font-size: 1.3rem; }
-            .espiritu-flotante { width: 120px; bottom: -10px; }
+            .espiritu-flotante { width: 110px; bottom: 5px; }
+            .hero { min-height: 400px; padding-bottom: 110px; }
         }
     </style>
 </head>
